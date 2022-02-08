@@ -8,13 +8,18 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region                  = "eu-central-1"
   shared_credentials_file = "/home/zsorour/.aws/creds"
 }
 
+
+# let terraform adopt my default vpc on AWS so that I can use its data
+# instead of hardcoding the values later on.
+resource "aws_default_vpc" "default_vpc" {}
+
 resource "aws_security_group" "http_server_sg" {
   name   = "http_server_sg"
-  vpc_id = "vpc-00e3058257768b140"
+  vpc_id = aws_default_vpc.default_vpc.id
 
   ingress {
     from_port   = 80
