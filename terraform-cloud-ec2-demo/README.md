@@ -3,6 +3,7 @@
 Notes:
 1. The addition of _remote-state.tf_ file for the remote block
 2. A .terraformrc file is created at ~/.terraformrc that contains
+3. AWS credentials are specified in Terraform Cloud website using environment variables.
 
 Useful resources and references:
 https://www.youtube.com/watch?v=ZGl8wlxlcIU
