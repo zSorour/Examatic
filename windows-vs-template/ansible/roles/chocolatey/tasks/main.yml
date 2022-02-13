@@ -1,0 +1,6 @@
+- name: Install Chocolatey on Windows
+  win_chocolatey:
+    name:
+      - chocolatey
+      - chocolatey-core.extension
+    state: present
