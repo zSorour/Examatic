@@ -1,0 +1,7 @@
+- name: Create student user with no password
+  win_user:
+    name: student
+    password: testing@Password1
+    groups:
+      - Users
+    state: present

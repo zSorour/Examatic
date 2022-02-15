@@ -1,0 +1,8 @@
+[machine]
+18.195.96.188
+
+[machine:vars]
+ansible_user=Administrator
+ansible_password=@x(M5R7=hxzn(asrq5gaM*$EytBPq;s.
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore

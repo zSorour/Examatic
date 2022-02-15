@@ -1,0 +1,5 @@
+- name: Install VS using Chocolatey
+  win_chocolatey:
+    name: visualstudio2019community
+    state: present
+    package_params: '"--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended;includeOptional"'

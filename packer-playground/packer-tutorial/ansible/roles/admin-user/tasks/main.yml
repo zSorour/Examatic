@@ -1,0 +1,4 @@
+- name: Install VS Code using Chocolatey
+  win_user:
+    name: student
+    state: present

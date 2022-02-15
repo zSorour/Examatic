@@ -41,6 +41,13 @@ resource "aws_security_group" "http_server_sg" {
   }
 
   ingress {
+    from_port   = 5986
+    to_port     = 5986
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -62,7 +69,8 @@ resource "aws_security_group" "http_server_sg" {
 
 # Creating an EC2 Instance
 resource "aws_instance" "http_server" {
-  ami                    = data.aws_ami.latest_windows_ami.id
+  # ami                    = data.aws_ami.latest_windows_ami.id
+  ami                    = "ami-059eee1f677658b68"
   key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]

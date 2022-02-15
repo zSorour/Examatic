@@ -1,0 +1,9 @@
+---
+- name: Install Visual Studio on Windows Machine
+  hosts: default
+
+  roles:
+    # - admin-user
+    - user
+    - chocolatey
+    - vscode
