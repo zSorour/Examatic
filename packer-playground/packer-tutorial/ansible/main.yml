@@ -1,9 +1,9 @@
 ---
-- name: Install Visual Studio on Windows Machine
+- name: Install Visual Studio Code on Windows Machine
   hosts: default
 
   roles:
-    # - admin-user
+    - admin-user
     - user
-    - chocolatey
+    - windows-common
     - vscode

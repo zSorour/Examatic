@@ -1,4 +1,8 @@
-- name: Install VS Code using Chocolatey
+- name: Create admin user with no password
   win_user:
-    name: student
+    name: admin
+    password: testing@Password1
+    groups:
+      - Administrators
+      - Remote Desktop Users
     state: present
