@@ -70,7 +70,7 @@ resource "aws_security_group" "http_server_sg" {
 # Creating an EC2 Instance
 resource "aws_instance" "http_server" {
   # ami                    = data.aws_ami.latest_windows_ami.id
-  ami                    = ""
+  ami                    = "ami-0f18bbd2b2a11ac38"
   key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
