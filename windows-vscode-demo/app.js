@@ -21,22 +21,26 @@ app.get("/create-instance", async (req, res, next) => {
     "-json"
   ]);
 
-  let output;
+  let instance_ip;
 
   for await (const chunk of tfApply.stdout) {
-    // parse the buffered chunk to JSON
-    try {
-      const parsedChunk = JSON.parse(chunk);
-      // only concerned with the chunk of type outputs.
-      // this contains Terraform output
-      if (parsedChunk.type === "outputs") {
-        output = parsedChunk.outputs;
+    const stringifiedChunk = chunk.toString().trim();
+    const jsonArray = stringifiedChunk.split(/\r?\n/);
+    for (const jsonString of jsonArray) {
+      const message = JSON.parse(jsonString);
+      if (
+        message.type === "outputs" &&
+        message.outputs.windows_instance_public_ip.value
+      ) {
+        instance_ip = message.outputs.windows_instance_public_ip.value;
       }
-    } catch (error) {
-      output = "error";
     }
   }
-  res.json(output);
+
+  res.send({
+    msg: "Instance created successfully.",
+    public_ip: instance_ip
+  });
 });
 
 const server = app.listen(PORT, () => {

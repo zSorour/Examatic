@@ -1,9 +1,8 @@
 ---
-- name: Install Visual Studio on Windows Machine
+- name: Testing
   hosts: all
 
   roles:
     # - admin-user
     # - user
-    - chocolatey
-    - visual-studio
+    - python

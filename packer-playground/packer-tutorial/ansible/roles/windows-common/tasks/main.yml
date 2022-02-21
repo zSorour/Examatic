@@ -6,6 +6,11 @@
       - chocolatey-core.extension
     state: present
 
+- name: Install UltraVNC on Windows
+  win_chocolatey:
+    name: ultravnc
+    state: present
+
 - name: Install Edge
   win_chocolatey:
     name: microsoft-edge

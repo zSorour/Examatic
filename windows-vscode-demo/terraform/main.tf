@@ -48,11 +48,33 @@ resource "aws_security_group" "windows_instance_sg" {
   }
 
   ingress {
+    from_port   = 5901
+    to_port     = 5901
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 5900
+    to_port     = 5900
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    from_port   = 6080
+    to_port     = 6080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 
   egress {
     from_port   = 0
@@ -69,7 +91,7 @@ resource "aws_security_group" "windows_instance_sg" {
 
 # Creating an EC2 Instance
 resource "aws_instance" "windows_instance" {
-  ami                    = "ami-0b01e36f6fd3fcec6"
+  ami                    = "ami-0dd24b8454c52c4e0"
   key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.windows_instance_sg.id]

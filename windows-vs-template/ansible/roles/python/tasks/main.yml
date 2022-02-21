@@ -1,0 +1,13 @@
+---
+- name: Install nodejs
+  win_chocolatey:
+    name: nodejs
+    state: present
+- name: Install WSL
+  win_chocolatey:
+    name: wsl
+    state: present
+- name: Install Ubuntu for WSL
+  win_chocolatey:
+    name: wsl-ubuntu-2004
+    state: present
