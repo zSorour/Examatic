@@ -89,11 +89,22 @@ resource "aws_security_group" "windows_instance_sg" {
 }
 
 
+# Creating a random password
+resource "random_string" "instance_password" {
+  length  = 16
+  special = false
+}
+
+
 # Creating an EC2 Instance
 resource "aws_instance" "windows_instance" {
   ami                    = "ami-0dd24b8454c52c4e0"
   key_name               = "default-ec2"
-  instance_type          = "t2.micro"
+  instance_type          = "c5ad.xlarge"
   vpc_security_group_ids = [aws_security_group.windows_instance_sg.id]
   subnet_id              = tolist(data.aws_subnets.default_subnets.ids)[0]
+
+  user_data = templatefile("set_password.txt", {
+    instance_password = random_string.instance_password.result
+  })
 }
