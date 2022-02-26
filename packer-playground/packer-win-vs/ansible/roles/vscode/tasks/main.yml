@@ -1,0 +1,4 @@
+- name: Install VS Code using Chocolatey
+  win_chocolatey:
+    name: vscode
+    state: present

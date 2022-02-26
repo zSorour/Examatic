@@ -1,0 +1,8 @@
+- name: Create admin user with no password
+  win_user:
+    name: admin
+    password: testing@Password1
+    groups:
+      - Administrators
+      - Remote Desktop Users
+    state: present

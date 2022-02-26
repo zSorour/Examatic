@@ -1,0 +1,27 @@
+---
+- name: Install Chocolatey on Windows
+  win_chocolatey:
+    name:
+      - chocolatey
+      - chocolatey-core.extension
+    state: present
+
+- name: Install UltraVNC on Windows
+  win_chocolatey:
+    name: ultravnc
+    state: present
+
+- name: Install Edge
+  win_chocolatey:
+    name: microsoft-edge
+    state: present
+
+- name: Install Chrome
+  win_chocolatey:
+    name: googlechrome
+    state: present
+
+- name: Install 7zip
+  win_chocolatey:
+    name: 7zip
+    state: present
