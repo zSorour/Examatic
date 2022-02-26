@@ -99,7 +99,7 @@ resource "random_string" "instance_password" {
 # Creating an EC2 Instance
 resource "aws_instance" "windows_instance" {
   # ami = data.aws_ami.latest_windows_ami.id
-  ami                    = "ami-0d15a83b87b8a03a2"
+  ami                    = data.aws_ami.windows-vs-ami.id
   key_name               = "default-ec2"
   instance_type          = "t3.xlarge"
   vpc_security_group_ids = [aws_security_group.windows_instance_sg.id]

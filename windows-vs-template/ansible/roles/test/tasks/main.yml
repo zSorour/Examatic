@@ -1,4 +1,14 @@
 ---
+- name: Delete AWS Feedback Shortcut
+  win_file:
+    path: 'C:\Users\student\Desktop\EC2 Feedback.website'
+    state: absent
+
+- name: Delete AWS Windows Guide Shortcut
+  win_file:
+    path: 'C:\Users\student\Desktop\EC2 Microsoft Windows Guide.website'
+    state: absent
+
 - name: Make directory for wallpaper
   win_file:
     path: 'C:\wallpaper'
@@ -16,23 +26,3 @@
       Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name TileWallpaper -value "0"
       Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name WallpaperStyle -value "10" -Force
       RUNDLL32.EXE USER32.DLL,UpdatePerUserSystemParameters ,1 ,True
-
-- name: Install UltraVNC on Windows
-  win_chocolatey:
-    name: ultravnc
-    state: present
-
-- name: Install Edge
-  win_chocolatey:
-    name: microsoft-edge
-    state: present
-
-- name: Install Chrome
-  win_chocolatey:
-    name: googlechrome
-    state: present
-
-- name: Install 7zip
-  win_chocolatey:
-    name: 7zip
-    state: present

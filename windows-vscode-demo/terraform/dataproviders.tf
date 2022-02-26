@@ -20,3 +20,13 @@ data "aws_ami" "latest_windows_ami" {
     values = ["hvm"]
   }
 }
+
+
+data "aws_ami" "windows-vs-ami" {
+  most_recent = true
+  owners      = ["self"]
+  filter {
+    name   = "name"
+    values = ["win-vs-temp"]
+  }
+}
