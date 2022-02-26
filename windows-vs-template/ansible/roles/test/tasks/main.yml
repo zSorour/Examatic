@@ -1,28 +1,30 @@
 ---
-- name: Delete AWS Feedback Shortcut
-  win_file:
-    path: 'C:\Users\student\Desktop\EC2 Feedback.website'
-    state: absent
+- name: Firewall rule to enable port 6080 for VNC WebSocket proxy
+  win_firewall_rule:
+    name: NoVNC Proxy
+    localport: 6080
+    action: allow
+    direction: in
+    protocol: tcp
+    state: present
+    enabled: yes
 
-- name: Delete AWS Windows Guide Shortcut
-  win_file:
-    path: 'C:\Users\student\Desktop\EC2 Microsoft Windows Guide.website'
-    state: absent
+- name: Install git
+  win_chocolatey:
+    name: git
+    state: present
 
-- name: Make directory for wallpaper
+- name: Make directory for Websockify Proxy
   win_file:
-    path: 'C:\wallpaper'
+    path: 'C:\novnc'
     state: directory
 
-- name: Copy wallpaper to remote machine
-  win_copy:
-    src: "../../../../files/wallpaper.png"
-    dest: 'C:\wallpaper\wallpaper.png'
-
-- name: Set Wallpaper Wallpaper
+- name: Download NoVNC
   ansible.windows.win_powershell:
     script: |
-      Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name Wallpaper -value "C:\wallpaper\wallpaper.png"
-      Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name TileWallpaper -value "0"
-      Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name WallpaperStyle -value "10" -Force
-      RUNDLL32.EXE USER32.DLL,UpdatePerUserSystemParameters ,1 ,True
+      git clone https://github.com/novnc/noVNC 'C:\novnc'
+
+- name: Install latest Python version
+  win_chocolatey:
+    name: python
+    state: present

@@ -17,9 +17,50 @@
       Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name WallpaperStyle -value "10" -Force
       RUNDLL32.EXE USER32.DLL,UpdatePerUserSystemParameters ,1 ,True
 
+- name: Make directory for UltraVNC setup files
+  win_file:
+    path: 'C:\uvnc-setup'
+    state: directory
+
+- name: Copy setup inf file
+  win_copy:
+    src: "../../../../files/ultravnc/vncsetup.inf"
+    dest: 'C:\uvnc-setup\vncsetup.inf'
+
 - name: Install UltraVNC on Windows
   win_chocolatey:
     name: ultravnc
+    package_params: '/LoadInf:C:\uvnc-setup\vncsetup.inf'
+    state: present
+
+- name: Firewall rule to enable port 6080 for VNC WebSocket proxy
+  win_firewall_rule:
+    name: NoVNC Proxy
+    localport: 6080
+    action: allow
+    direction: in
+    protocol: tcp
+    state: present
+    enabled: yes
+
+- name: Install git
+  win_chocolatey:
+    name: git
+    state: present
+
+- name: Make directory for Websockify Proxy (NoVNC's Websockify)
+  win_file:
+    path: 'C:\novnc'
+    state: directory
+
+- name: Download NoVNC
+  ansible.windows.win_powershell:
+    script: |
+      git clone https://github.com/novnc/noVNC 'C:\novnc'
+
+- name: Install latest Python version
+  win_chocolatey:
+    name: python
     state: present
 
 - name: Install Edge
