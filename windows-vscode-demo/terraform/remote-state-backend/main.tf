@@ -14,7 +14,7 @@ provider "aws" {
 
 # CREATE S3 BUCKET TO STORE STATE REMOTELY
 resource "aws_s3_bucket" "remote_backend_state" {
-  bucket = "windows-vs-demo-backend-state-186081"
+  bucket = "windows-vs-demo-backend-state-unique"
   lifecycle {
     prevent_destroy = true
   }

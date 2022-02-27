@@ -6,8 +6,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket                  = "windows-vs-demo-backend-state-186081"
-    key                     = "windows-vs-demo"
+    bucket                  = "windows-vs-demo-backend-state-unique"
+    workspace_key_prefix    = "exam-name"
+    key                     = "backend-state"
     region                  = "eu-central-1"
     dynamodb_table          = "windows-vs-demo_locks"
     encrypt                 = true
@@ -33,7 +34,7 @@ resource "aws_default_vpc" "default_vpc" {
 
 # create security group
 resource "aws_security_group" "windows_instance_sg" {
-  name   = "windows_instance_sg"
+  name   = "windows_instance_sg_${terraform.workspace}"
   vpc_id = aws_default_vpc.default_vpc.id
 
   ingress {

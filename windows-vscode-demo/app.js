@@ -1,5 +1,5 @@
 const express = require("express");
-const { spawn } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 
 const PORT = 3000;
 const app = express();
@@ -14,6 +14,31 @@ app.get("/create-instance", async (req, res, next) => {
   can easily parse later.
   */
 
+  const studentID = 186081;
+
+  const tfNewWorkspace = spawn("terraform", [
+    "-chdir=terraform",
+    "workspace",
+    "new",
+    studentID
+  ]);
+
+  tfNewWorkspace.on("exit", (code, signal) => {
+    if (code !== 0) {
+      // Could not create workspace, it already exists
+      spawnSync("terraform", [
+        "-chdir=terraform",
+        "workspace",
+        "select",
+        studentID
+      ]);
+    } else {
+      spawnSync("terraform", ["-chdir=terraform", "init"]);
+    }
+
+    // todo: use async/await instead of spawnSync for non-blocking flow
+  });
+
   const tfApply = spawn("terraform", [
     "-chdir=terraform",
     "apply",
@@ -27,7 +52,15 @@ app.get("/create-instance", async (req, res, next) => {
     const stringifiedChunk = chunk.toString().trim();
     const jsonArray = stringifiedChunk.split(/\r?\n/);
     for (const jsonString of jsonArray) {
-      const message = JSON.parse(jsonString);
+      let message;
+      try {
+        message = JSON.parse(jsonString);
+        console.log(message);
+      } catch (error) {
+        console.log(jsonString);
+        continue;
+      }
+
       if (
         message.type === "outputs" &&
         message.outputs.windows_instance_public_ip.value
