@@ -1,0 +1,52 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
+provider "aws" {
+  region                   = "eu-central-1"
+  shared_credentials_files = ["/home/zsorour/.aws/creds"]
+}
+
+
+# CREATE S3 BUCKET TO STORE STATE REMOTELY
+resource "aws_s3_bucket" "remote_backend_state" {
+  bucket = "windows-vs-demo-backend-state-186081"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+# ENABLE VERSIONING ON THE S3 BUCKET
+resource "aws_s3_bucket_versioning" "remote_backend_versioning" {
+  bucket = aws_s3_bucket.remote_backend_state.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# ENABLE SERVER SIDE ENCRYPTION
+resource "aws_s3_bucket_server_side_encryption_configuration" "remote_backend_ss-encryption" {
+  bucket = aws_s3_bucket.remote_backend_state.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+# UTILIZE REMOTE-STATE LOCKING FOR CONCURRENT TERRAFORM RUNS
+resource "aws_dynamodb_table" "remote_backend_state_lock" {
+  name         = "windows-vs-demo_locks"
+  billing_mode = "PAY_PER_REQUEST"
+
+  hash_key = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+}
