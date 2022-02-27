@@ -4,6 +4,16 @@ terraform {
       source = "hashicorp/aws"
     }
   }
+
+  backend "s3" {
+    bucket                  = "windows-vs-demo-backend-state-186081"
+    key                     = "windows-vs-demo"
+    region                  = "eu-central-1"
+    dynamodb_table          = "windows-vs-demo_locks"
+    encrypt                 = true
+    shared_credentials_file = "/home/zsorour/.aws/creds"
+  }
+
 }
 
 provider "aws" {

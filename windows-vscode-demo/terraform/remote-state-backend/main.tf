@@ -39,9 +39,13 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "remote_backend_ss
 }
 
 # UTILIZE REMOTE-STATE LOCKING FOR CONCURRENT TERRAFORM RUNS
+# SETUP A DYNAMODB TABLE. TERRAFORM WILL USE THIS FOR STATE LOCKING
 resource "aws_dynamodb_table" "remote_backend_state_lock" {
   name         = "windows-vs-demo_locks"
   billing_mode = "PAY_PER_REQUEST"
+
+
+  # LockID hash_key and attribute name are reserved for Terraform to function properly
 
   hash_key = "LockID"
 
