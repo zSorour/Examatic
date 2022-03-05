@@ -1,30 +1,46 @@
 ---
-- name: Firewall rule to enable port 6080 for VNC WebSocket proxy
-  win_firewall_rule:
-    name: NoVNC Proxy
-    localport: 6080
-    action: allow
-    direction: in
-    protocol: tcp
-    state: present
-    enabled: yes
-
-- name: Install git
+- name: Install Nodejs
   win_chocolatey:
-    name: git
+    name: nodejs
     state: present
 
-- name: Make directory for Websockify Proxy
-  win_file:
-    path: 'C:\novnc'
-    state: directory
-
-- name: Download NoVNC
+- name: Download WebsockifyJS
   ansible.windows.win_powershell:
     script: |
-      git clone https://github.com/novnc/noVNC 'C:\novnc'
+      git clone https://github.com/novnc/websockify-js.git 'C:\Websockify'
 
-- name: Install latest Python version
-  win_chocolatey:
-    name: python
+- name: Install NPM packages
+  ansible.windows.win_powershell:
+    script: |
+      cd C:\Websockify\websockify
+      npm i
+
+- name: Create directory for TightVNC setup file
+  win_file:
+    path: 'C:\TightVNC'
+    state: directory
+
+- name: Download TightVNC
+  win_get_url:
+    url: https://www.tightvnc.com/download/2.8.63/tightvnc-2.8.63-gpl-setup-64bit.msi
+    dest: 'C:\TightVNC\TightVNC.msi'
+
+- name: Install TightVNC
+  win_package:
+    path: 'C:\TightVNC\TightVNC.msi'
     state: present
+    arguments:
+      - /quiet
+      - /norestart
+      - ADDLOCAL=Server
+      - SERVER_REGISTER_AS_SERVICE=1
+      - SERVER_ADD_FIREWALL_EXCEPTION=1
+      - SERVER_ALLOW_SAS=1
+      - SET_POLLINGINTERVAL=1
+      - VALUE_OF_POLLINGINTERVAL=10
+      - SET_RFBPORT=1
+      - VALUE_OF_RFBPORT=5900
+      - SET_USEVNCAUTHENTICATION=1
+      - VALUE_OF_USEVNCAUTHENTICATION=1
+      - SET_PASSWORD=1
+      - VALUE_OF_PASSWORD=123
