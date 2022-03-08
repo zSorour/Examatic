@@ -9,7 +9,7 @@ const VNCScreen = () => {
     <div>
       <VncScreen
         className={styles.VNCScreen}
-        url="ws://18.194.51.209:6080"
+        url="ws://3.71.43.138:6080"
         scaleViewport
       ></VncScreen>
     </div>

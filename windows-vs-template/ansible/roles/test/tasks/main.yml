@@ -1,19 +1,29 @@
 ---
-- name: Install Nodejs
-  win_chocolatey:
-    name: nodejs
-    state: present
-
-- name: Download WebsockifyJS
+- name: Install Numpy
   ansible.windows.win_powershell:
     script: |
-      git clone https://github.com/novnc/websockify-js.git 'C:\Websockify'
+      pip install numpy
 
-- name: Install NPM packages
+- name: Download Websockify
   ansible.windows.win_powershell:
     script: |
-      cd C:\Websockify\websockify
-      npm i
+      git clone https://github.com/novnc/websockify.git 'C:\Websockify'
+
+- name: Copy .bat file
+  win_copy:
+    src: "../../../files/websockify.bat"
+    dest: 'C:\Websockify\run_websockify.bat'
+
+- name: Schedule task
+  win_scheduled_task:
+    name: WebsockifyServer
+    desciption: Run websockify server on startup (boot)
+    actions:
+      - path: cmd.exe
+        arguments: /C C:\Websockify\run_websockify.bat
+    triggers:
+      - type: boot
+    username: SYSTEM
 
 - name: Create directory for TightVNC setup file
   win_file:
@@ -37,7 +47,7 @@
       - SERVER_ADD_FIREWALL_EXCEPTION=1
       - SERVER_ALLOW_SAS=1
       - SET_POLLINGINTERVAL=1
-      - VALUE_OF_POLLINGINTERVAL=10
+      - VALUE_OF_POLLINGINTERVAL=5
       - SET_ALLOWLOOPBACK=1
       - VALUE_OF_ALLOWLOOPBACK=1
       - SET_RFBPORT=1
