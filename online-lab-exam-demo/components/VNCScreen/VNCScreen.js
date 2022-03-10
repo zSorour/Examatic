@@ -9,7 +9,13 @@ const VNCScreen = () => {
     <div>
       <VncScreen
         className={styles.VNCScreen}
-        url="ws://3.71.43.138:6080"
+        onPaste={() => {
+          const clipboard = navigator.clipboard;
+          clipboard.readText().then((text) => {
+            console.log(text);
+          });
+        }}
+        url="ws://3.125.50.192:6080"
         scaleViewport
       ></VncScreen>
     </div>

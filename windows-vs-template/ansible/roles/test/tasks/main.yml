@@ -1,58 +1,19 @@
 ---
+- name: Install git
+  win_chocolatey:
+    name: git
+    state: present
+
+- name: Install latest Python version
+  win_chocolatey:
+    name: python
+    state: present
+
 - name: Install Numpy
   ansible.windows.win_powershell:
     script: |
       pip install numpy
 
-- name: Download Websockify
-  ansible.windows.win_powershell:
-    script: |
-      git clone https://github.com/novnc/websockify.git 'C:\Websockify'
 
-- name: Copy .bat file
-  win_copy:
-    src: "../../../files/websockify.bat"
-    dest: 'C:\Websockify\run_websockify.bat'
 
-- name: Schedule task
-  win_scheduled_task:
-    name: WebsockifyServer
-    desciption: Run websockify server on startup (boot)
-    actions:
-      - path: cmd.exe
-        arguments: /C C:\Websockify\run_websockify.bat
-    triggers:
-      - type: boot
-    username: SYSTEM
 
-- name: Create directory for TightVNC setup file
-  win_file:
-    path: 'C:\TightVNC'
-    state: directory
-
-- name: Download TightVNC
-  win_get_url:
-    url: https://www.tightvnc.com/download/2.8.63/tightvnc-2.8.63-gpl-setup-64bit.msi
-    dest: 'C:\TightVNC\TightVNC.msi'
-
-- name: Install TightVNC
-  win_package:
-    path: 'C:\TightVNC\TightVNC.msi'
-    state: present
-    arguments:
-      - /quiet
-      - /norestart
-      - ADDLOCAL=Server
-      - SERVER_REGISTER_AS_SERVICE=1
-      - SERVER_ADD_FIREWALL_EXCEPTION=1
-      - SERVER_ALLOW_SAS=1
-      - SET_POLLINGINTERVAL=1
-      - VALUE_OF_POLLINGINTERVAL=5
-      - SET_ALLOWLOOPBACK=1
-      - VALUE_OF_ALLOWLOOPBACK=1
-      - SET_RFBPORT=1
-      - VALUE_OF_RFBPORT=5900
-      - SET_USEVNCAUTHENTICATION=1
-      - VALUE_OF_USEVNCAUTHENTICATION=1
-      - SET_PASSWORD=1
-      - VALUE_OF_PASSWORD=123

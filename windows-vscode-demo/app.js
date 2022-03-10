@@ -46,7 +46,7 @@ app.get("/create-instance", async (req, res, next) => {
     "-json"
   ]);
 
-  let instance_ip;
+  let instance_ip, temp_password;
 
   for await (const chunk of tfApply.stdout) {
     const stringifiedChunk = chunk.toString().trim();
@@ -66,13 +66,15 @@ app.get("/create-instance", async (req, res, next) => {
         message.outputs.windows_instance_public_ip.value
       ) {
         instance_ip = message.outputs.windows_instance_public_ip.value;
+        temp_password = message.outputs.windows_instance_student_password.value;
       }
     }
   }
 
   res.send({
     msg: "Instance created successfully.",
-    public_ip: instance_ip
+    public_ip: instance_ip,
+    temp_password: temp_password
   });
 });
 

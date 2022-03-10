@@ -59,13 +59,6 @@ resource "aws_security_group" "windows_instance_sg" {
   }
 
   ingress {
-    from_port   = 5901
-    to_port     = 5901
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 5900
     to_port     = 5900
     protocol    = "tcp"
@@ -116,7 +109,7 @@ resource "aws_instance" "windows_instance" {
   vpc_security_group_ids = [aws_security_group.windows_instance_sg.id]
   subnet_id              = tolist(data.aws_subnets.default_subnets.ids)[0]
 
-  user_data = templatefile("set_password.txt", {
+  user_data = templatefile("set_password.tpl", {
     instance_password = random_string.instance_password.result
   })
 
