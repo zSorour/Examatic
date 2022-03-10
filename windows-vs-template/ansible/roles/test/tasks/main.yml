@@ -1,18 +1,13 @@
 ---
-- name: Install git
-  win_chocolatey:
-    name: git
-    state: present
-
-- name: Install latest Python version
-  win_chocolatey:
-    name: python
-    state: present
-
-- name: Install Numpy
-  ansible.windows.win_powershell:
-    script: |
-      pip install numpy
+- name: Delete Amazon EC2 default scripts for setting wallpaper
+  win_file:
+    path: 'C:\ProgramData\Amazon\EC2-Windows\Launch\Module\Scripts\{{item}}'
+    state: absent
+  with_items:
+   - "Clear-Wallpaper.ps1"
+   - "Import-WallpaperUtil.ps1"
+   - "New-WallpaperSetup.ps1"
+   - "Set-Wallpaper.ps1"
 
 
 

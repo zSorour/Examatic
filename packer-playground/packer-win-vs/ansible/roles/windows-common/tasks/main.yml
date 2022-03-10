@@ -1,4 +1,14 @@
 ---
+- name: Delete Amazon EC2 default scripts for setting wallpaper
+  win_file:
+    path: 'C:\ProgramData\Amazon\EC2-Windows\Launch\Module\Scripts\{{item}}'
+    state: absent
+  with_items:
+    - "Clear-Wallpaper.ps1"
+    - "Import-WallpaperUtil.ps1"
+    - "New-WallpaperSetup.ps1"
+    - "Set-Wallpaper.ps1"
+
 - name: Make directory for wallpaper
   win_file:
     path: 'C:\wallpaper'

@@ -1,5 +1,5 @@
 [machine]
-3.71.43.138
+52.58.231.96
 
 [machine:vars]
 ansible_user=admin
