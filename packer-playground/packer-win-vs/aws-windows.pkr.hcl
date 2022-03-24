@@ -17,11 +17,12 @@ variable "region" {
 # source.
 source "amazon-ebs" "win-vs-temp" {
   shared_credentials_file = "~/.aws/creds"
-  ami_name                = "win-vs-temp"
+  ami_name                = "win-vs-temp-v2"
   instance_type           = "t3.xlarge"
   launch_block_device_mappings {
     device_name = "/dev/sda1"
     volume_size = 100
+    delete_on_termination = true
 }
   region                  = "${var.region}"
   source_ami_filter {

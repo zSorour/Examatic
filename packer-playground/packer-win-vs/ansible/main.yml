@@ -1,10 +1,9 @@
 ---
-- name: Install Visual Studio Code on Windows Machine
+- name: Bake instance with all required fundemental programs and dependencies
   hosts: default
 
   roles:
     - admin-user
     - user
     - windows-common
-    - vscode
     - visual-studio

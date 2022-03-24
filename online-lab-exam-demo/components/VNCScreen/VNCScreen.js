@@ -11,6 +11,7 @@ const VNCScreen = () => {
   return (
     <VNCScreenLayout screenRef={vncScreenRef}>
       <VncScreen
+      className={styles.VNCScreen}
         ref={vncScreenRef}
         onPaste={() => {
           const clipboard = navigator.clipboard;
@@ -18,9 +19,8 @@ const VNCScreen = () => {
             console.log(text);
           });
         }}
-        url="ws://3.123.253.78:6080"
+        url="ws://3.72.3.19:6080"
         scaleViewport
-        retryDuration={5000}
       ></VncScreen>
     </VNCScreenLayout>
   );

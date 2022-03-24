@@ -27,6 +27,6 @@ data "aws_ami" "windows-vs-ami" {
   owners      = ["self"]
   filter {
     name   = "name"
-    values = ["win-vs-temp"]
+    values = ["win-vs-temp-v2"]
   }
 }

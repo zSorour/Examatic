@@ -19,17 +19,25 @@
     src: "../../../../files/wallpaper.png"
     dest: 'C:\wallpaper\wallpaper.png'
 
-- name: Set Wallpaper Wallpaper
-  ansible.windows.win_powershell:
-    script: |
-      Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name Wallpaper -value "C:\wallpaper\wallpaper.png"
-      Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name TileWallpaper -value "0"
-      Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name WallpaperStyle -value "10" -Force
-      RUNDLL32.EXE USER32.DLL,UpdatePerUserSystemParameters ,1 ,True
-
 - name: Install git
   win_chocolatey:
     name: git
+    state: present
+
+- name: Install NodeJS
+  win_chocolatey:
+    name: nodejs
+    state: present
+
+- name: Install jdk8
+  win_chocolatey:
+    name: jdk8
+    version: '8.0.211'
+    state: present
+
+- name: Install VS Code using Chocolatey
+  win_chocolatey:
+    name: vscode
     state: present
 
 - name: Install latest Python version
@@ -72,7 +80,7 @@
       - SET_USEVNCAUTHENTICATION=1
       - VALUE_OF_USEVNCAUTHENTICATION=1
       - SET_PASSWORD=1
-      - VALUE_OF_PASSWORD=123
+      - VALUE_OF_PASSWORD=testing@Password1
 
 - name: Firewall rule to enable port 6080 for VNC WebSocket proxy
   win_firewall_rule:
@@ -119,7 +127,3 @@
   win_chocolatey:
     name: 7zip
     state: present
-
-- name: Schedule user data
-  ansible.windows.win_powershell:
-    script: 'C:\ProgramData\Amazon\EC2-Windows\Launch\Scripts\InitializeInstance.ps1 –Schedule'

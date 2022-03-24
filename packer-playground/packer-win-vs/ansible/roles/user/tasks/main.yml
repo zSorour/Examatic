@@ -7,13 +7,3 @@
       - Users
       - Remote Desktop Users
     state: present
-
-- name: Delete AWS Feedback Shortcut
-  win_file:
-    path: 'C:\Users\student\Desktop\EC2 Feedback.website'
-    state: absent
-
-- name: Delete AWS Windows Guide Shortcut
-  win_file:
-    path: 'C:\Users\student\Desktop\EC2 Microsoft Windows Guide.website'
-    state: absent

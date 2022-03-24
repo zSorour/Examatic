@@ -102,21 +102,35 @@ resource "random_string" "instance_password" {
 
 # Creating an EC2 Instance
 resource "aws_instance" "windows_instance" {
-  # ami = data.aws_ami.latest_windows_ami.id
   ami                    = data.aws_ami.windows-vs-ami.id
   key_name               = "default-ec2"
-  instance_type          = "t3.xlarge"
+  instance_type          = "c5.xlarge"
   vpc_security_group_ids = [aws_security_group.windows_instance_sg.id]
   subnet_id              = tolist(data.aws_subnets.default_subnets.ids)[0]
 
-  user_data = templatefile("set_password.tpl", {
-    instance_password = random_string.instance_password.result
-  })
-
   ebs_block_device {
-    volume_size = 100
-    device_name = "/dev/sda1"
+    volume_size           = 100
+    device_name           = "/dev/sda1"
     delete_on_termination = true
+  }
+
+  connection {
+    type     = "winrm"
+    user     = "admin"
+    password = "testing@Password1"
+    host     = self.public_ip
+    insecure = true
+    https    = true
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "powershell net user student ${random_string.instance_password.result}",
+      "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Feedback.website'",
+      "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Microsoft Windows Guide.website'",
+      "powershell Remove-Item -Path 'C:\\Users\\student\\Desktop\\EC2 Feedback.website'",
+      "powershell Remove-Item -Path 'C:\\Users\\student\\Desktop\\EC2 Microsoft Windows Guide.website'"
+    ]
   }
 
 }
