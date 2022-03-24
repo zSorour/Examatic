@@ -11,7 +11,6 @@ export default function Home() {
         <h1>Hello Everyone! Enjoy a great demo!</h1>
       </main>
       <VNCScreen />
-      <input type="text" />
     </div>
   );
 }

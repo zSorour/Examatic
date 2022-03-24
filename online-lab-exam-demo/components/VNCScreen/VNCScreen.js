@@ -1,24 +1,28 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { VncScreen } from "react-vnc";
 
 import styles from "./VNCScreen.module.css";
+import VNCScreenLayout from "./VNCScreenLayout/VNCScreenLayout";
 
 const VNCScreen = () => {
+  const vncScreenRef = useRef(null);
+
   return (
-    <div>
+    <VNCScreenLayout screenRef={vncScreenRef}>
       <VncScreen
-        className={styles.VNCScreen}
+        ref={vncScreenRef}
         onPaste={() => {
           const clipboard = navigator.clipboard;
           clipboard.readText().then((text) => {
             console.log(text);
           });
         }}
-        url="ws://3.125.50.192:6080"
+        url="ws://3.123.253.78:6080"
         scaleViewport
+        retryDuration={5000}
       ></VncScreen>
-    </div>
+    </VNCScreenLayout>
   );
 };
 

@@ -116,6 +116,7 @@ resource "aws_instance" "windows_instance" {
   ebs_block_device {
     volume_size = 100
     device_name = "/dev/sda1"
+    delete_on_termination = true
   }
 
 }
