@@ -87,6 +87,16 @@ app.get("/create-instance", async (req, res, next) => {
   });
 });
 
+
+app.use("/auth", );
+
+// define a catch-all error handler middleware
+app.use("/", (err, req, res, next) => {
+  res.status(err.code || 500);
+  const errorMessage = err.message || "Server error, please try again later.";
+  res.json({ message: errorMessage });
+});
+
 const server = app.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
   initiateDBConnection();

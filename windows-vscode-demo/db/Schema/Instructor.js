@@ -3,7 +3,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const CourseSchema = require("./Course");
 
-const StudentSchema = new Schema({
+const InstructorSchema = new Schema({
   username: {
     type: "String",
     required: true,
@@ -18,28 +18,20 @@ const StudentSchema = new Schema({
     type: "String",
     required: true
   },
-  enrolledCourses: [
+  assignedCourses: [
     {
       type: ObjectId,
       ref: "Course"
     }
   ],
-  currentExam: {
-    examDetails: {
+  assignedExams: [
+    {
       type: ObjectId,
       ref: "Exam"
-    },
-    assignedInstance: {
-      instanceIP: {
-        type: "String"
-      },
-      instancePassword: {
-        type: "String"
-      }
     }
-  }
+  ]
 });
 
-StudentSchema.plugin(uniqueValidator);
+InstructorSchema.plugin(uniqueValidator);
 
-module.exports = StudentSchema;
+module.exports = InstructorSchema;

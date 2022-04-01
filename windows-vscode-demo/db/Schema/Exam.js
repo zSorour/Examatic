@@ -2,6 +2,7 @@ const { Schema, ObjectId } = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
 const InstanceTemplateSchema = require("./InstanceTemplate");
+const InstructorSchema = require("./Instructor");
 
 const ExamSchema = new Schema({
   name: {
@@ -19,7 +20,16 @@ const ExamSchema = new Schema({
       ref: "Student"
     }
   ],
-  instanceTemplate: InstanceTemplateSchema
+  createdBy: InstructorSchema,
+  instanceTemplate: InstanceTemplateSchema,
+  invigilationInstance: {
+    instanceIP: {
+      type: "String"
+    },
+    instancePassword: {
+      type: "String"
+    }
+  }
 });
 
 ExamSchema.plugin(uniqueValidator);

@@ -10,7 +10,19 @@ const CourseSchema = new Schema({
     type: "String",
     required: true,
     unique: true
-  }
+  },
+  enrolledStudents: [
+    {
+      type: ObjectId,
+      ref: "Student"
+    }
+  ],
+  enrolledInstructors: [
+    {
+      type: ObjectId,
+      ref: "Instructor"
+    }
+  ]
 });
 
 CourseSchema.plugin(uniqueValidator);
