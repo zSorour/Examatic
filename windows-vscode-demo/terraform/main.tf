@@ -127,9 +127,7 @@ resource "aws_instance" "windows_instance" {
     inline = [
       "powershell net user student ${random_string.instance_password.result}",
       "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Feedback.website'",
-      "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Microsoft Windows Guide.website'",
-      "powershell Remove-Item -Path 'C:\\Users\\student\\Desktop\\EC2 Feedback.website'",
-      "powershell Remove-Item -Path 'C:\\Users\\student\\Desktop\\EC2 Microsoft Windows Guide.website'"
+      "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Microsoft Windows Guide.website'"
     ]
   }
 

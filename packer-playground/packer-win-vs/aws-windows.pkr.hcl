@@ -12,9 +12,7 @@ variable "region" {
   default = "eu-central-1"
 }
 
-# source blocks are generated from your builders; a source can be referenced in
-# build blocks. A build block runs provisioner and post-processors on a
-# source.
+# source blocks are generated from builders;
 source "amazon-ebs" "win-vs-temp" {
   shared_credentials_file = "~/.aws/creds"
   ami_name                = "win-vs-temp-v2"

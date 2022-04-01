@@ -1,0 +1,3 @@
+/*
+PLACEHOLDER FOR AUTH.JS
+*/

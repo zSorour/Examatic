@@ -12,7 +12,7 @@ const Toolbar = (props) => {
     <header className={classes.Toolbar}>
       <DrawerToggle clicked={props.drawerToggleClicked} />
       <div className={classes.Logo}>
-        <h1>XCloud</h1>
+        <h1>GP Demo</h1>
       </div>
       <nav className={classes.DesktopOnly}>
         <NavigationItems
