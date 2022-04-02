@@ -4,13 +4,12 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 const { initiateDBConnection } = require("./db/db");
+const authRouter = require("./routes/auth");
 
 dotenv.config();
-
 const PORT = process.env.PORT;
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -87,14 +86,14 @@ app.get("/create-instance", async (req, res, next) => {
   });
 });
 
-
-app.use("/auth", );
+app.use("/auth", authRouter);
 
 // define a catch-all error handler middleware
 app.use("/", (err, req, res, next) => {
   res.status(err.code || 500);
-  const errorMessage = err.message || "Server error, please try again later.";
-  res.json({ message: errorMessage });
+  const errorMessage = err.message || "Server error.";
+  const errorDetails = err.details || ["There is an issue on the server's side, please try again later."];
+  res.json({ error: errorMessage, errorDetails: errorDetails});
 });
 
 const server = app.listen(PORT, () => {

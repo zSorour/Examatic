@@ -1,6 +1,6 @@
-const { model } = require("mongoose");
+const { model, models } = require("mongoose");
 
 const CourseSchema = require("../db/Schema/Course");
 
-const Course = model("Student", CourseSchema);
-module.exports = Course;
+const Course = model("Course", CourseSchema);
+module.exports = models.Course || Course;

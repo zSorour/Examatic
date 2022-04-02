@@ -1,6 +1,6 @@
-const { model } = require("mongoose");
+const { model, models } = require("mongoose");
 
 const InstanceTemplateSchema = require("../db/Schema/InstanceTemplate");
 
 const InstanceTemplate = model("InstanceTemplate", InstanceTemplateSchema);
-module.exports = InstanceTemplate;
+module.exports = models.InstanceTemplate || InstanceTemplate;

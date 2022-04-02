@@ -1,13 +1,17 @@
 const { Schema, ObjectId } = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
-const CourseSchema = require("./Course");
-
 const StudentSchema = new Schema({
   username: {
     type: "String",
     required: true,
-    unique: true
+    index: {
+      unique: true,
+      collation: {
+        locale: "en",
+        strength: 2
+      }
+    }
   },
   password: {
     type: "String",
