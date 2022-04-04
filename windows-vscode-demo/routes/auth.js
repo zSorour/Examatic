@@ -11,4 +11,12 @@ authRouter.post(
   authController.login
 );
 
+//This route is for simulation purposes only!
+//Typically, there would not be a register feature since user data is retrieved from educational institutions' API.
+authRouter.post(
+  "/register",
+  authValidator.registerValidator(),
+  authController.register
+);
+
 module.exports = authRouter;

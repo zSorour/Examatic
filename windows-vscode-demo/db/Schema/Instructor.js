@@ -5,13 +5,7 @@ const InstructorSchema = new Schema({
   username: {
     type: "String",
     required: true,
-    index: {
-      unique: true,
-      collation: {
-        locale: "en",
-        strength: 2
-      }
-    }
+    unique: true
   },
   password: {
     type: "String",
