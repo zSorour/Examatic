@@ -25,18 +25,12 @@ const LoginForm = () => {
   const authCTX = useContext(AuthContext);
 
   const onSubmit = async (formData) => {
-    const requestBody = JSON.stringify({
-      username: formData.username,
-      password: formData.password,
-      role: "Student"
-    });
-
     let responseData;
     try {
       responseData = await sendRequest(
         "http://localhost:5000/auth/login",
         "POST",
-        requestBody,
+        JSON.stringify(formData),
         {
           "Content-Type": "application/json"
         }
@@ -44,7 +38,8 @@ const LoginForm = () => {
     } catch (err) {
       console.log("Error signing in.");
     }
-    console.log(responseData);
+    const { userId, username, role, token } = responseData;
+    authCTX.login(userId, username, role, token);
   };
 
   return (
