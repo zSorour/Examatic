@@ -1,16 +1,12 @@
-import dynamic from "next/dynamic";
-
-const VNCScreen = dynamic(() =>
-  import("../components/VNCScreen/VNCScreen", { ssr: false })
-);
+import Link from "next/link";
+import React from "react";
 
 export default function Home() {
   return (
     <div>
-      <main>
-        <h1>Hello Everyone! Enjoy a great demo!</h1>
-      </main>
-      <VNCScreen />
+      <Link href={"/exam"} passHref={true}>
+        <a>Exam</a>
+      </Link>
     </div>
   );
 }

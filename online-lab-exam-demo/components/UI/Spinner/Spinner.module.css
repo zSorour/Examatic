@@ -15,8 +15,8 @@
   width: 55px;
   height: 55px;
   border-radius: 50%;
-  border: 5px solid #292f6bee;
-  border-color: #292f6bee transparent #292f6bee transparent;
+  border: 5px solid var(--translucent-primary);
+  border-color: var(--translucent-primary) transparent var(--translucent-primary) transparent;
   animation: dual-ring 1.2s linear infinite;
 }
 

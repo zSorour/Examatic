@@ -1,0 +1,129 @@
+import React, { useContext, useState } from "react";
+import { useRouter } from "next/router";
+
+import { useForm } from "react-hook-form";
+import { useHttpClient } from "../../hooks/http-hook";
+import AuthContext from "../../store/authContext";
+import styles from "./LoginForm.module.css";
+import modalStyles from "../../styles/Modal.module.css";
+import LockOutlined from "@mui/icons-material/LockOutlined";
+import { Avatar, Modal } from "@mui/material";
+import Spinner from "../UI/Spinner/Spinner";
+
+const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+
+  const { isLoading, errorTitle, errorDetails, sendRequest, clearError } =
+    useHttpClient();
+
+  const router = useRouter();
+
+  const authCTX = useContext(AuthContext);
+
+  const onSubmit = async (formData) => {
+    const requestBody = JSON.stringify({
+      username: formData.username,
+      password: formData.password,
+      role: "Student"
+    });
+
+    let responseData;
+    try {
+      responseData = await sendRequest(
+        "http://localhost:5000/auth/login",
+        "POST",
+        requestBody,
+        {
+          "Content-Type": "application/json"
+        }
+      );
+    } catch (err) {
+      console.log("Error signing in.");
+    }
+    console.log(responseData);
+  };
+
+  return (
+    <form className={styles.LoginForm} onSubmit={handleSubmit(onSubmit)}>
+      <h1 className={styles.LoginHeading}>Login</h1>
+
+      <Avatar className={styles.Avatar}>
+        <LockOutlined sx={{ fill: "#292f6b" }} />
+      </Avatar>
+
+      <div className={styles.Input}>
+        <input
+          type="text"
+          placeholder="Username"
+          {...register("username", { required: true })}
+        />
+        {errors.username && (
+          <p className={styles.Error}>Username cannot be empty</p>
+        )}
+      </div>
+
+      <div className={styles.Input}>
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password", { required: true })}
+        />
+        {errors.password && (
+          <p className={styles.Error}>Password cannot be empty</p>
+        )}
+      </div>
+
+      <div className={styles.Role}>
+        <div className={styles.RadioInput}>
+          <input
+            type="radio"
+            value="Student"
+            id="role-student"
+            defaultChecked
+            {...register("role", { required: true })}
+          />
+          <label htmlFor="role-student">Student</label>
+        </div>
+
+        <div className={styles.RadioInput}>
+          <input
+            type="radio"
+            value="Instructor"
+            id="role-instructor"
+            {...register("role", { required: true })}
+          />
+          <label htmlFor="role-instructor">Instructor</label>
+        </div>
+      </div>
+      {errors.role && <p className={styles.Error}>Role cannot be empty</p>}
+
+      <input className={styles.Button} type="submit" value="Login" />
+
+      <Modal
+        open={!!errorTitle}
+        className={modalStyles.Modal}
+        onClose={clearError}
+      >
+        <div className={modalStyles.ModalContent}>
+          <h1 className={modalStyles.Message}>{errorTitle}</h1>
+          <p className={modalStyles.Message}>{errorDetails[0]}</p>
+          <div className={modalStyles.Actions}>
+            <button onClick={clearError}>Ok</button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal open={isLoading} className={modalStyles.Modal}>
+        <div className={modalStyles.ModalContent}>
+          <Spinner />
+        </div>
+      </Modal>
+    </form>
+  );
+};
+
+export default LoginForm;

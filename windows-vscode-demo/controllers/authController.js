@@ -94,7 +94,8 @@ module.exports.login = async (req, res, next) => {
   res.json({
     userId: user._id,
     username: user.username,
-    token: token
+    token: token,
+    role: role
   });
 };
 
