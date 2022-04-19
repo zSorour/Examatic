@@ -46,8 +46,8 @@ const LoginForm = () => {
     <form className={styles.LoginForm} onSubmit={handleSubmit(onSubmit)}>
       <h1 className={styles.LoginHeading}>Login</h1>
 
-      <Avatar className={styles.Avatar}>
-        <LockOutlined sx={{ fill: "#292f6b" }} />
+      <Avatar className={styles.Avatar} sx={{width: "80px", height: "80px", backgroundColor: "white"}}>
+        <LockOutlined sx={{ fill: "#292f6b", width: "50px", height: "50px"}} />
       </Avatar>
 
       <div className={styles.Input}>

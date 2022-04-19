@@ -77,7 +77,7 @@ module.exports.login = async (req, res, next) => {
   const jwtSecret = process.env.JWT_SECRET;
 
   const jwtOptions = {
-    expiresIn: "1h"
+    expiresIn: "3h"
   };
 
   try {

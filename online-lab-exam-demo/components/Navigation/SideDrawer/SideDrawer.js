@@ -17,7 +17,7 @@ const SideDrawer = (props) => {
       <Backdrop show={props.open} clicked={props.closed} />
       <div className={attachedClasses.join(" ")} onClick={props.closed}>
         <div className={classes.Logo}>
-          <h1>XCloud</h1>
+          <h1>GP Demo</h1>
         </div>
         <nav>
           <NavigationItems isAuthenticated={!!authCTX.token} />
