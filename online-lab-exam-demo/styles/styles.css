@@ -11,6 +11,17 @@ body {
   padding: 0;
 }
 
+body {
+  background-image: url("https://images.unsplash.com/photo-1508780709619-79562169bc64?");
+  background-size: cover;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+input:focus {
+  outline: none;
+}
+
 * {
   font-family: "Open Sans";
 }

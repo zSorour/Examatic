@@ -35,19 +35,20 @@ const LoginForm = () => {
           "Content-Type": "application/json"
         }
       );
+      const { userId, username, role, token } = responseData;
+      authCTX.login(userId, username, role, token);
     } catch (err) {
       console.log("Error signing in.");
     }
-    const { userId, username, role, token } = responseData;
-    authCTX.login(userId, username, role, token);
   };
 
   return (
     <form className={styles.LoginForm} onSubmit={handleSubmit(onSubmit)}>
-      <h1 className={styles.LoginHeading}>Login</h1>
-
-      <Avatar className={styles.Avatar} sx={{width: "80px", height: "80px", backgroundColor: "white"}}>
-        <LockOutlined sx={{ fill: "#292f6b", width: "50px", height: "50px"}} />
+      <Avatar
+        className={styles.Avatar}
+        sx={{ width: "80px", height: "80px", backgroundColor: "white" }}
+      >
+        <LockOutlined sx={{ fill: "#292f6b", width: "50px", height: "50px" }} />
       </Avatar>
 
       <div className={styles.Input}>

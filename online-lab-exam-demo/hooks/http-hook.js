@@ -36,7 +36,9 @@ export const useHttpClient = () => {
         return responseData;
       } catch (err) {
         setErrorTitle("Server Error");
-        setErrorDetails("Error connecting to server, please try again later.");
+        setErrorDetails([
+          "Error connecting to server, please try again later."
+        ]);
         setIsLoading(false);
         throw err;
       }
