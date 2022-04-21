@@ -3,10 +3,10 @@
   flex-direction: column;
   align-items: center;
   background-color: var(--translucent-primary);
-  padding: 5% 5%;
-  max-width: 500px;
-  max-height: 800px;
-  border-radius: 25px;
+  padding: 80px 80px;
+  margin: 5rem;
+  border-radius: 50px;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.7);
 }
 
 .LoginForm .Input {
@@ -66,16 +66,19 @@
   font-size: 1.5em;
   font-weight: bold;
   border: none;
+  filter: drop-shadow(0px 0px 10px rgba(204, 22, 113, 0.541));
 }
 
 .LoginForm .Button:hover {
   background-color: rgba(255, 255, 255, 0.877);
   cursor: pointer;
+  transform: scale(1.2);
 }
 
 .Avatar {
   background-color: white;
   margin: 30px;
+  filter: drop-shadow(0px 0px 20px rgba(204, 22, 113, 0.479));
 }
 
 .SignUp {

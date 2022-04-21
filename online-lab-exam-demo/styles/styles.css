@@ -2,26 +2,35 @@
 
 :root {
   --primary: #292f6b;
-  --translucent-primary: #292f6bd8;
+  --translucent-primary: #292f6bce;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-image: url("https://images.unsplash.com/photo-1508780709619-79562169bc64?");
-  background-size: cover;
+html {
   min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80");
+  backdrop-filter: blur(20px) brightness(0.5) contrast(1.12);
+  background-size: cover;
   min-height: -webkit-fill-available;
 }
 
-input:focus {
+input {
+  transition: all .2s ease-in-out;
+}
+
+input:focus,
+input:hover {
   outline: none;
+  filter: drop-shadow(0px 0px 10px rgba(204, 22, 113, 0.541));
+  transform: scale(1.2);
 }
 
 * {
   font-family: "Open Sans";
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }

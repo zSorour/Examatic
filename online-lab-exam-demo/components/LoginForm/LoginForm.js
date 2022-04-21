@@ -6,7 +6,7 @@ import { useHttpClient } from "../../hooks/http-hook";
 import AuthContext from "../../store/authContext";
 import styles from "./LoginForm.module.css";
 import modalStyles from "../../styles/Modal.module.css";
-import LockOutlined from "@mui/icons-material/LockOutlined";
+import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
 import { Avatar, Modal } from "@mui/material";
 import Spinner from "../UI/Spinner/Spinner";
 
@@ -37,6 +37,7 @@ const LoginForm = () => {
       );
       const { userId, username, role, token } = responseData;
       authCTX.login(userId, username, role, token);
+      router.push("/");
     } catch (err) {
       console.log("Error signing in.");
     }
@@ -48,7 +49,7 @@ const LoginForm = () => {
         className={styles.Avatar}
         sx={{ width: "80px", height: "80px", backgroundColor: "white" }}
       >
-        <LockOutlined sx={{ fill: "#292f6b", width: "50px", height: "50px" }} />
+        <LockOpenOutlined sx={{ fill: "#292f6b", width: "50px", height: "50px" }} />
       </Avatar>
 
       <div className={styles.Input}>
