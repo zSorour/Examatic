@@ -15,10 +15,15 @@ body {
   backdrop-filter: blur(20px) brightness(0.5) contrast(1.12);
   background-size: cover;
   min-height: -webkit-fill-available;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin: 0;
 }
 
 input {
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
 }
 
 input:focus,
@@ -29,8 +34,6 @@ input:hover {
 }
 
 * {
-  font-family: "Open Sans";
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
 }

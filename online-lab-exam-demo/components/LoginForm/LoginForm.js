@@ -106,7 +106,7 @@ const LoginForm = () => {
         onClose={clearError}
       >
         <div className={modalStyles.ModalContent}>
-          <h1 className={modalStyles.Message}>{errorTitle}</h1>
+          <h1 className={modalStyles.Title}>{errorTitle}</h1>
           <p className={modalStyles.Message}>{errorDetails[0]}</p>
           <div className={modalStyles.Actions}>
             <button onClick={clearError}>Ok</button>
