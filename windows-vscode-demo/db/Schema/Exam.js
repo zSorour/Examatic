@@ -20,7 +20,10 @@ const ExamSchema = new Schema({
       ref: "Student"
     }
   ],
-  createdBy: InstructorSchema,
+  createdBy: {
+    type: ObjectId,
+    ref: "Instructor"
+  },
   instanceTemplate: InstanceTemplateSchema,
   invigilationInstance: {
     instanceIP: {

@@ -22,6 +22,12 @@ const StudentSchema = new Schema({
       ref: "Course"
     }
   ],
+  enrolledExams: [
+    {
+      type: ObjectId,
+      ref: "Exam"
+    }
+  ],
   currentExam: {
     examDetails: {
       type: ObjectId,

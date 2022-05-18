@@ -6,6 +6,7 @@ const { ExpressPeerServer } = require("peer");
 
 const { initiateDBConnection } = require("./db/db");
 const authRouter = require("./routes/auth");
+const examManagementRouter = require("./routes/examManagement");
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -104,6 +105,8 @@ app.get("/create-instance", async (req, res, next) => {
 });
 
 app.use("/auth", authRouter);
+
+app.use("/exam-management", examManagementRouter);
 
 // define a catch-all error handler middleware
 app.use("/", (err, req, res, next) => {
