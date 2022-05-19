@@ -1,8 +1,9 @@
 ---
-- name: Create student user with no password
+- name: Create student user with password
   win_user:
     name: student
-    password: testing@Password1
+    password: std@TempPassword1!
+    password_never_expires: yes
     groups:
       - Users
       - Remote Desktop Users

@@ -13,10 +13,10 @@ variable "region" {
 }
 
 # source blocks are generated from builders;
-source "amazon-ebs" "win-vs-temp" {
+source "amazon-ebs" "win-basic" {
   shared_credentials_file = "~/.aws/creds"
-  ami_name                = "win-vs-temp-v2"
-  instance_type           = "t3.xlarge"
+  ami_name                = "win-basic"
+  instance_type           = "c5.xlarge"
   launch_block_device_mappings {
     device_name = "/dev/sda1"
     volume_size = 100
@@ -43,8 +43,8 @@ source "amazon-ebs" "win-vs-temp" {
 
 # a build block invokes sources and runs provisioning steps on them.
 build {
-  name    = "win-vs-temp-builder"
-  sources = ["source.amazon-ebs.win-vs-temp"]
+  name    = "win-basic-builder"
+  sources = ["source.amazon-ebs.win-basic"]
 
   provisioner "ansible" {
     user             = "Administrator"

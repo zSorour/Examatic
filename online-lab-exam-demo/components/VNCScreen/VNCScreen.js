@@ -19,7 +19,7 @@ const VNCScreen = () => {
             console.log(text);
           });
         }}
-        url="ws://3.67.226.165:6080"
+        url="ws://18.185.110.89:6080"
         scaleViewport
       ></VncScreen>
     </VNCScreenLayout>

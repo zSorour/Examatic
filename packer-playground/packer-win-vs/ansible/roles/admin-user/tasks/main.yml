@@ -1,7 +1,8 @@
 - name: Create admin user with no password
   win_user:
     name: admin
-    password: testing@Password1
+    password: adm@!S3CR3T!1
+    password_never_expires: yes
     groups:
       - Administrators
       - Remote Desktop Users
