@@ -102,9 +102,9 @@ resource "random_string" "instance_password" {
 
 # Creating an EC2 Instance
 resource "aws_instance" "windows_instance" {
-  ami                    = data.aws_ami.windows-vs-ami.id
+  ami                    = data.aws_ami.target_ami.id
   key_name               = "default-ec2"
-  instance_type          = "c5.xlarge"
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.windows_instance_sg.id]
   subnet_id              = tolist(data.aws_subnets.default_subnets.ids)[0]
 
