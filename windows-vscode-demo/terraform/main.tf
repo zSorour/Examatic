@@ -117,7 +117,7 @@ resource "aws_instance" "windows_instance" {
   connection {
     type     = "winrm"
     user     = "admin"
-    password = "testing@Password1"
+    password = "adm@!S3CR3T!1"
     host     = self.public_ip
     insecure = true
     https    = true

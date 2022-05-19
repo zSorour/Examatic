@@ -2,6 +2,7 @@ const { ObjectId } = require("mongoose").Types;
 const { validationResult } = require("express-validator");
 
 const mongoose = require("mongoose");
+const { spawn, spawnSync } = require("child_process");
 
 const HttpError = require("../models/HTTPError");
 const Student = require("../models/Student");
@@ -113,13 +114,15 @@ module.exports.connectToExam = async (req, res, next) => {
     can easily parse later.
     */
 
-  const studentID = 186081;
+  const studentUsername = req.body.username;
+
+  console.log(studentUsername);
 
   const tfNewWorkspace = spawn("terraform", [
     "-chdir=terraform",
     "workspace",
     "new",
-    studentID
+    studentUsername
   ]);
 
   tfNewWorkspace.on("exit", (code, signal) => {
@@ -129,7 +132,7 @@ module.exports.connectToExam = async (req, res, next) => {
         "-chdir=terraform",
         "workspace",
         "select",
-        studentID
+        studentUsername
       ]);
     } else {
       spawnSync("terraform", ["-chdir=terraform", "init"]);

@@ -5,6 +5,6 @@ const studentRouter = Router();
 
 studentRouter.get("/exams", studentController.getStudentExams);
 studentRouter.get("/get-current-exam", studentController.getCurrentExam);
-studentRouter.get("/connect-to-exam", studentController.connectToExam);
+studentRouter.patch("/connect-to-exam", studentController.connectToExam);
 
 module.exports = studentRouter;
