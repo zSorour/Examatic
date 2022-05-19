@@ -119,7 +119,7 @@ module.exports.connectToExam = async (req, res, next) => {
   console.log(studentUsername);
 
   const tfNewWorkspace = spawn("terraform", [
-    "-chdir=terraform",
+    "-chdir=terraform/exam_instance",
     "workspace",
     "new",
     studentUsername
@@ -129,20 +129,20 @@ module.exports.connectToExam = async (req, res, next) => {
     if (code !== 0) {
       // Could not create workspace, it already exists
       spawnSync("terraform", [
-        "-chdir=terraform",
+        "-chdir=terraform/exam_instance",
         "workspace",
         "select",
         studentUsername
       ]);
     } else {
-      spawnSync("terraform", ["-chdir=terraform", "init"]);
+      spawnSync("terraform", ["-chdir=terraform/exam_instance", "init"]);
     }
 
     // todo: use async/await instead of spawnSync for non-blocking flow
   });
 
   const tfApply = spawn("terraform", [
-    "-chdir=terraform",
+    "-chdir=terraform/exam_instance",
     "apply",
     "-auto-approve",
     "-json"

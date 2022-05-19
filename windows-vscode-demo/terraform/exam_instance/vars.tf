@@ -1,3 +1,11 @@
+variable "vpc_id" {
+  type = string
+}
+
+variable "security_group_id" {
+  type = string
+}
+
 variable "instance_type" {
   type    = string
   default = "c5.xlarge"

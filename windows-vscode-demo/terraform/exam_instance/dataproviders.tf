@@ -1,8 +1,14 @@
+# get desired security group
+data "aws_security_group" "sg" {
+  id = var.security_group_id
+}
+
+
 # get information about subnet ids of a certain VPC
-data "aws_subnets" "default_subnets" {
+data "aws_subnets" "vpc_subnets" {
   filter {
     name   = "vpc-id"
-    values = [aws_default_vpc.default_vpc.id]
+    values = [var.vpc_id]
   }
 }
 
