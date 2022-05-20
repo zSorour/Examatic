@@ -4,13 +4,13 @@ const uniqueValidator = require("mongoose-unique-validator");
 const InstanceTemplateSchema = new Schema({
   name: {
     type: "String",
-    required: true,
-    unique: true
+    required: true
   },
   os: {
     type: "String",
     required: true
   },
+  installedSoftware: [{ type: "String" }],
   description: {
     type: "String",
     required: true

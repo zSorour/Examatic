@@ -2,13 +2,11 @@ const { Schema, ObjectId } = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
 const InstanceTemplateSchema = require("./InstanceTemplate");
-const InstructorSchema = require("./Instructor");
 
 const ExamSchema = new Schema({
   name: {
     type: "String",
-    required: true,
-    unique: true
+    required: true
   },
   duration: {
     type: "Number",
@@ -31,7 +29,18 @@ const ExamSchema = new Schema({
     },
     instancePassword: {
       type: "String"
-    }
+    },
+    select: false
+  },
+  vpcID: {
+    type: "String",
+    required: true,
+    select: false
+  },
+  sgID: {
+    type: "String",
+    required: true,
+    select: false
   }
 });
 

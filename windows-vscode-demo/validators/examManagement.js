@@ -1,7 +1,10 @@
 const { check } = require("express-validator");
 
 module.exports.createExamValidator = () => [
-  check("name").notEmpty().withMessage("ُExam name must not be empty."),
+  check("name").notEmpty().withMessage("Exam name must not be empty."),
+  check("name")
+    .matches(/^\S*$/)
+    .withMessage("Exam name must not contain spaces"),
   check("duration").notEmpty().withMessage("Exam duration must not be empty."),
   check("duration").custom((value) => {
     if (value < 60) {

@@ -115,7 +115,11 @@ const applyTerraform = async (dir, inputVars) => {
   return promise;
 };
 
-const createTerraformInfrastructure = async (dir, workspaceName, inputVars) => {
+const createTerraformInfrastructure = async (
+  dir,
+  workspaceName,
+  inputVars = []
+) => {
   let terraformResult;
   let error;
   try {
@@ -144,8 +148,4 @@ const createTerraformInfrastructure = async (dir, workspaceName, inputVars) => {
   return promise;
 };
 
-module.exports.terraformWorkspaceExists = terraformWorkspaceExists;
-module.exports.selectTerraformWorkspace = selectTerraformWorkspace;
-module.exports.createTerraformWorkspace = createTerraformWorkspace;
-module.exports.applyTerraform = applyTerraform;
 module.exports.createTerraformInfrastructure = createTerraformInfrastructure;

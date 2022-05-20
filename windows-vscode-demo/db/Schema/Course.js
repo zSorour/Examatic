@@ -8,8 +8,7 @@ const CourseSchema = new Schema({
   },
   code: {
     type: "String",
-    required: true,
-    unique: true
+    required: true
   },
   enrolledStudents: [
     {
