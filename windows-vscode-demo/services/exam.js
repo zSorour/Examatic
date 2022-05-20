@@ -39,15 +39,16 @@ module.exports.isExamUnique = async (name) => {
 module.exports.createExam = async (
   name,
   duration,
+  startDateTime,
   instructorID,
   courseCode,
   instanceTemplate,
   terraformResult
 ) => {
-  console.log(instructorID);
   let newExam = new Exam({
     name: name.toUpperCase(),
     duration,
+    startDateTime,
     createdBy: instructorID,
     instanceTemplate: instanceTemplate,
     vpcID: terraformResult.vpc_id.value,

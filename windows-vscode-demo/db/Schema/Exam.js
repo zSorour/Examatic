@@ -12,6 +12,10 @@ const ExamSchema = new Schema({
     type: "Number",
     required: true
   },
+  startDateTime: {
+    type: "String",
+    required: true
+  },
   enrolledStudents: [
     {
       type: ObjectId,

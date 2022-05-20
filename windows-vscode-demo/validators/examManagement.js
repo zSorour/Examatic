@@ -12,6 +12,11 @@ module.exports.createExamValidator = () => [
     }
     return true;
   }),
+  check("startDateTime")
+    .isISO8601()
+    .withMessage(
+      "Start date time must follow ISO 8601. Example: 2020-01-01T00:00:00Z"
+    ),
   check("courseCode").notEmpty().withMessage("Course code must not be empty."),
   check("instructorID")
     .notEmpty()

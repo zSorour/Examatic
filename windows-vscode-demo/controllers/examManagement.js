@@ -13,8 +13,14 @@ module.exports.createExam = async (req, res, next) => {
     return next(error);
   }
 
-  const { name, duration, courseCode, instructorID, instanceTemplateName } =
-    req.body;
+  const {
+    name,
+    duration,
+    startDateTime,
+    courseCode,
+    instructorID,
+    instanceTemplateName
+  } = req.body;
 
   // Call promises in parallel. If anyone fails/rejects, all promises are rejected.
   let promisesResults;
@@ -53,6 +59,7 @@ module.exports.createExam = async (req, res, next) => {
     await examService.createExam(
       name,
       duration,
+      startDateTime,
       instructor._id,
       courseCode,
       instanceTemplate,
