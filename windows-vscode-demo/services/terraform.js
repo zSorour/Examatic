@@ -8,16 +8,7 @@ const terraformWorkspaceExists = async (dir, workspaceName) => {
   if (stdout.includes(workspaceName)) {
     exists = true;
   }
-
-  const promise = new Promise((resolve, reject) => {
-    if (exists) {
-      resolve(true);
-    } else {
-      reject(false);
-    }
-  });
-
-  return promise;
+  return exists;
 };
 
 const createTerraformWorkspace = async (dir, workspaceName) => {
