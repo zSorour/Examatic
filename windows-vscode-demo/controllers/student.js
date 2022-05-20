@@ -1,46 +1,26 @@
 const terraformService = require("../services/terraform");
 
 const HttpError = require("../models/HTTPError");
-const Student = require("../models/Student");
+const studentService = require("../services/student");
+const examService = require("../services/exam");
 
 module.exports.getStudentExams = async (req, res, next) => {
   const studentUsername = req.query.username;
-  let student;
+
+  let enrolledExams;
   try {
-    student = await Student.findOne({ username: studentUsername });
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Server Error",
-      ["Couldn't get the current exam."],
-      500
-    );
+    enrolledExams = await studentService.getStudentExams(studentUsername);
+  } catch (error) {
     return next(error);
   }
 
-  if (!student) {
-    const error = new HttpError(
-      "Invalid Student",
-      ["No student with the given username exists."],
-      404
-    );
-    return next(error);
-  }
-
-  try {
-    await student.populate("enrolledExams");
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Server Error",
-      ["Couldn't get the student's exams"],
-      500
-    );
-    return next(error);
-  }
-
-  const studentExams = student.enrolledExams.map((exam) => {
-    return { name: exam.name, duration: exam.duration };
+  const studentExams = enrolledExams.map((exam) => {
+    return {
+      id: exam._id,
+      name: exam.name,
+      duration: exam.duration,
+      startDateTime: exam.startDateTime
+    };
   });
 
   res.send({
@@ -50,69 +30,72 @@ module.exports.getStudentExams = async (req, res, next) => {
 
 module.exports.getCurrentExam = async (req, res, next) => {
   const studentUsername = req.query.username;
-  let student;
+
+  let currentExam;
   try {
-    student = await Student.findOne({ username: studentUsername });
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Server Error",
-      ["Couldn't get the current exam."],
-      500
-    );
-    return next(error);
-  }
-
-  if (!student) {
-    const error = new HttpError(
-      "Invalid Student",
-      ["No student with the given username exists."],
-      404
-    );
-    return next(error);
-  }
-
-  if (!student.currentExam.examDetails) {
-    const error = new HttpError(
-      "No Current Exam",
-      ["There is no current exam registered, please connect to an exam."],
-      404
-    );
-    return next(error);
-  }
-
-  try {
-    await student.populate("currentExam.examDetails");
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Server Error",
-      ["Couldn't get the current exam."],
-      500
-    );
+    currentExam = await studentService.getCurrentExam(studentUsername);
+  } catch (error) {
     return next(error);
   }
 
   res.send({
     examDetails: {
-      examName: student.currentExam.examDetails.name,
-      examDuration: student.currentExam.examDetails.duration
+      examName: currentExam.examDetails.name,
+      examDuration: currentExam.examDetails.duration
     },
-    instanceDetails: student.currentExam.assignedInstance
+    instanceDetails: currentExam.assignedInstance
   });
 };
 
 module.exports.connectToExam = async (req, res, next) => {
-  const studentUsername = req.body.username;
-  console.log(studentUsername);
+  const { username, examID } = req.body;
+
+  let exam;
+
+  try {
+    await studentService.isStudentEnrolledIntoExam(username, examID);
+    exam = await examService.getExam(examID);
+  } catch (err) {
+    return next(err);
+  }
+
   const terraformDir = "terraform/exam_instance";
-
+  const tfVariables = [
+    {
+      name: "vpc_id",
+      value: exam.vpcID
+    },
+    {
+      name: "security_group_id",
+      value: exam.sgID
+    }
+  ];
   let terraformResult;
-
   try {
     terraformResult = await terraformService.createTerraformInfrastructure(
       terraformDir,
-      studentUsername
+      username,
+      tfVariables
+    );
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      "Server Error",
+      ["Couldn't connect you to exam, please try again later."],
+      500
+    );
+    return next(error);
+  }
+
+  const instanceIP = terraformResult.instance_ip.value;
+  const tempPassword = terraformResult.temp_password.value;
+
+  try {
+    await studentService.setCurrentExam(
+      username,
+      examID,
+      instanceIP,
+      tempPassword
     );
   } catch (err) {
     console.log(err);
@@ -126,7 +109,7 @@ module.exports.connectToExam = async (req, res, next) => {
 
   res.send({
     msg: "Instance created successfully.",
-    public_ip: terraformResult.instance_ip.value,
-    temp_password: terraformResult.temp_password.value
+    publicIP: instanceIP,
+    tempPassword: tempPassword
   });
 };

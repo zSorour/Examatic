@@ -89,3 +89,32 @@ module.exports.createExam = async (
 
   return promise;
 };
+
+module.exports.getExam = async (examID) => {
+  const promise = new Promise(async (resolve, reject) => {
+    let exam;
+    try {
+      exam = await Exam.findById(examID).select("+vpcID +sgID");
+    } catch (err) {
+      const error = new HttpError(
+        "Server Error",
+        ["The server failed processing your request, please try again later."],
+        500
+      );
+      return reject(error);
+    }
+
+    if (!exam) {
+      const error = new HttpError(
+        "Exam Not Found",
+        ["No exam with the given ID exists."],
+        404
+      );
+      return reject(error);
+    }
+
+    resolve(exam);
+  });
+
+  return promise;
+};
