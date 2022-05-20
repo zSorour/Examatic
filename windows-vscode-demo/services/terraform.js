@@ -49,7 +49,24 @@ const selectTerraformWorkspace = async (dir, workspaceName) => {
   return promise;
 };
 
-const applyTerraform = async (dir) => {
+const isTerraformOutputMessage = (message) => {
+  if (message.type == "outputs") {
+    console.log(message.outputs);
+    Object.values(message.outputs).forEach((output) => {
+      if (!output.value) {
+        return false;
+      }
+    });
+    return true;
+  }
+  return false;
+};
+
+const applyTerraform = async (dir, inputVars) => {
+  const tfInputVariables = inputVars.map(
+    (variable) => `-var=${variable.name}=${variable.value}`
+  );
+
   /*
     for automation, we execute the terraform apply command using
     -json and -auto-approve
@@ -61,10 +78,11 @@ const applyTerraform = async (dir) => {
     `-chdir=${dir}`,
     "apply",
     "-auto-approve",
-    "-json"
+    "-json",
+    ...tfInputVariables
   ]);
 
-  let instance_ip, temp_password;
+  let tfOutput;
 
   for await (const chunk of tfApply.stdout) {
     const stringifiedChunk = chunk.toString().trim();
@@ -80,22 +98,15 @@ const applyTerraform = async (dir) => {
         continue;
       }
 
-      if (
-        message.type === "outputs" &&
-        message.outputs.windows_instance_public_ip.value
-      ) {
-        instance_ip = message.outputs.windows_instance_public_ip.value;
-        temp_password = message.outputs.windows_instance_student_password.value;
+      if (isTerraformOutputMessage(message)) {
+        tfOutput = message.outputs;
       }
     }
   }
 
   const promise = new Promise((resolve, reject) => {
-    if (instance_ip && temp_password) {
-      resolve({
-        instance_ip,
-        temp_password
-      });
+    if (tfOutput) {
+      resolve(tfOutput);
     } else {
       reject("Could not apply terraform configuration");
     }
@@ -104,7 +115,7 @@ const applyTerraform = async (dir) => {
   return promise;
 };
 
-const createTerraformInfrastructure = async (dir, workspaceName) => {
+const createTerraformInfrastructure = async (dir, workspaceName, inputVars) => {
   let terraformResult;
   let error;
   try {
@@ -114,7 +125,7 @@ const createTerraformInfrastructure = async (dir, workspaceName) => {
     } else {
       await createTerraformWorkspace(dir, workspaceName);
     }
-    terraformResult = await applyTerraform(dir);
+    terraformResult = await applyTerraform(dir, inputVars);
   } catch (err) {
     error = err;
   }

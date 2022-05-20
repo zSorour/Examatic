@@ -126,7 +126,7 @@ module.exports.connectToExam = async (req, res, next) => {
 
   res.send({
     msg: "Instance created successfully.",
-    public_ip: terraformResult.instance_ip,
-    temp_password: terraformResult.temp_password
+    public_ip: terraformResult.instance_ip.value,
+    temp_password: terraformResult.temp_password.value
   });
 };
