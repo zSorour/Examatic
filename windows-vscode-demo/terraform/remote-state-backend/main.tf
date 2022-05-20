@@ -14,7 +14,7 @@ provider "aws" {
 
 # CREATE S3 BUCKET TO STORE STATE REMOTELY
 resource "aws_s3_bucket" "remote_backend_state" {
-  bucket = "windows-vs-demo-backend-state-unique"
+  bucket = "186081-gp-tf-backend-state"
   lifecycle {
     prevent_destroy = true
   }
@@ -41,7 +41,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "remote_backend_ss
 # UTILIZE REMOTE-STATE LOCKING FOR CONCURRENT TERRAFORM RUNS
 # SETUP A DYNAMODB TABLE. TERRAFORM WILL USE THIS FOR STATE LOCKING
 resource "aws_dynamodb_table" "remote_backend_state_lock" {
-  name         = "windows-vs-demo_locks"
+  name         = "186081-gp-tf-backend-state_locks"
   billing_mode = "PAY_PER_REQUEST"
 
 

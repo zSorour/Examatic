@@ -6,11 +6,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket                  = "windows-vs-demo-backend-state-unique"
-    workspace_key_prefix    = "exam-name"
+    bucket                  = "186081-gp-tf-backend-state"
+    workspace_key_prefix    = "exam-instances"
     key                     = "backend-state"
     region                  = "eu-central-1"
-    dynamodb_table          = "windows-vs-demo_locks"
+    dynamodb_table          = "186081-gp-tf-backend-state_locks"
     encrypt                 = true
     shared_credentials_file = "/home/zsorour/.aws/creds"
   }
