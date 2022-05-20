@@ -1,8 +1,4 @@
-const { ObjectId } = require("mongoose").Types;
-const { validationResult } = require("express-validator");
-
-const mongoose = require("mongoose");
-const { spawn, spawnSync } = require("child_process");
+const terraformService = require("../services/terraform");
 
 const HttpError = require("../models/HTTPError");
 const Student = require("../models/Student");
@@ -107,75 +103,30 @@ module.exports.getCurrentExam = async (req, res, next) => {
 };
 
 module.exports.connectToExam = async (req, res, next) => {
-  /*
-    for automation usage, we execute the terraform apply command using
-    -json and -auto-approve
-    this outputs the result in a JSON machine readable format that we
-    can easily parse later.
-    */
-
   const studentUsername = req.body.username;
-
   console.log(studentUsername);
+  const terraformDir = "terraform/exam_instance";
 
-  const tfNewWorkspace = spawn("terraform", [
-    "-chdir=terraform/exam_instance",
-    "workspace",
-    "new",
-    studentUsername
-  ]);
+  let terraformResult;
 
-  tfNewWorkspace.on("exit", (code, signal) => {
-    if (code !== 0) {
-      // Could not create workspace, it already exists
-      spawnSync("terraform", [
-        "-chdir=terraform/exam_instance",
-        "workspace",
-        "select",
-        studentUsername
-      ]);
-    } else {
-      spawnSync("terraform", ["-chdir=terraform/exam_instance", "init"]);
-    }
-
-    // todo: use async/await instead of spawnSync for non-blocking flow
-  });
-
-  const tfApply = spawn("terraform", [
-    "-chdir=terraform/exam_instance",
-    "apply",
-    "-auto-approve",
-    "-json"
-  ]);
-
-  let instance_ip, temp_password;
-
-  for await (const chunk of tfApply.stdout) {
-    const stringifiedChunk = chunk.toString().trim();
-    const jsonArray = stringifiedChunk.split(/\r?\n/);
-    for (const jsonString of jsonArray) {
-      let message;
-      try {
-        message = JSON.parse(jsonString);
-        console.log(message);
-      } catch (error) {
-        console.log(jsonString);
-        continue;
-      }
-
-      if (
-        message.type === "outputs" &&
-        message.outputs.windows_instance_public_ip.value
-      ) {
-        instance_ip = message.outputs.windows_instance_public_ip.value;
-        temp_password = message.outputs.windows_instance_student_password.value;
-      }
-    }
+  try {
+    terraformResult = await terraformService.createTerraformInfrastructure(
+      terraformDir,
+      studentUsername
+    );
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      "Server Error",
+      ["Couldn't connect you to exam, please try again later."],
+      500
+    );
+    return next(error);
   }
 
   res.send({
     msg: "Instance created successfully.",
-    public_ip: instance_ip,
-    temp_password: temp_password
+    public_ip: terraformResult.instance_ip,
+    temp_password: terraformResult.temp_password
   });
 };
