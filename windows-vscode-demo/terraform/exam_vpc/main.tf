@@ -71,7 +71,7 @@ resource "aws_route_table" "custom-route-table" {
 }
 
 # associate the custom route table with the public subnet
-resource "aws_route_table_association" "prod-crta-public-subnet-1" {
+resource "aws_route_table_association" "crta-public-subnet-1" {
   subnet_id      = aws_subnet.subnet.id
   route_table_id = aws_route_table.custom-route-table.id
 }
