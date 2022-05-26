@@ -26,6 +26,9 @@ provider "aws" {
 # Creating a random password
 resource "random_string" "instance_password" {
   length  = 12
+  min_numeric = 1
+  min_lower = 1
+  min_upper = 1
   special = false
 }
 
@@ -55,9 +58,9 @@ resource "aws_instance" "windows_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "powershell net user student ${random_string.instance_password.result}",
-      "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Feedback.website'",
-      "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Microsoft Windows Guide.website'"
+      "powershell net user student ${random_string.instance_password.result}"
+      # "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Feedback.website'",
+      # "powershell Remove-Item -Path 'C:\\Users\\admin\\Desktop\\EC2 Microsoft Windows Guide.website'"
     ]
   }
 

@@ -41,9 +41,15 @@ module.exports.createExam = async (req, res, next) => {
   const terraformDir = "terraform/exam_vpc";
   let terraformResult;
   try {
+    const startTime = performance.now();
     terraformResult = await terraformService.createTerraformInfrastructure(
       terraformDir,
       name
+    );
+    console.log(
+      `Exam network infrastructure created in: ${
+        performance.now() - startTime
+      } ms`
     );
   } catch (err) {
     console.log(err);

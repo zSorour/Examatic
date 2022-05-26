@@ -72,10 +72,16 @@ module.exports.connectToExam = async (req, res, next) => {
   ];
   let terraformResult;
   try {
+    const startTime = performance.now();
     terraformResult = await terraformService.createTerraformInfrastructure(
       terraformDir,
       username,
       tfVariables
+    );
+    console.log(
+      `Exam instance creation and fully ready time: ${
+        performance.now() - startTime
+      } ms`
     );
   } catch (err) {
     console.log(err);
