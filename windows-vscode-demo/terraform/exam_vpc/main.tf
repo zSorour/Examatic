@@ -2,6 +2,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
+      version = "4.17.1"
     }
   }
 
@@ -12,14 +13,12 @@ terraform {
     region                  = "eu-central-1"
     dynamodb_table          = "186081-gp-tf-backend-state_locks"
     encrypt                 = true
-    shared_credentials_file = "/home/zsorour/.aws/creds"
   }
 
 }
 
 provider "aws" {
   region                   = "eu-central-1"
-  shared_credentials_files = ["/home/zsorour/.aws/creds"]
 }
 
 

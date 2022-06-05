@@ -1,0 +1,10 @@
+{
+  "script": "./app.js",
+  "watch": true,
+  "ignore_watch": ["terraform"],
+  "exec-mode": "cluster",
+  "instances": "max",
+  "watch_options": {
+    "followSymlinks": false
+  }
+}
