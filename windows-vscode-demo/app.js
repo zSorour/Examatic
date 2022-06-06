@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { ExpressPeerServer } = require("peer");
+const os = require("os");
 
 const { initiateDBConnection } = require("./db/db");
 const authRouter = require("./routes/auth");
@@ -37,6 +38,10 @@ app.use("/auth", authRouter);
 app.use("/exam-management", examManagementRouter);
 
 app.use("/student", studentRouter);
+
+app.use("/api/test-docker", (req, res) => {
+  res.send(`Hello from Docker, Hostname: ${os.hostname()} PID: ${process.pid}`);
+});
 
 // define a catch-all error handler middleware
 app.use("/", (err, req, res, next) => {
