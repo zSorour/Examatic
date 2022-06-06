@@ -1,11 +1,10 @@
 variable "digital_ocean_token" {
   description = "value of the DigitalOcean API token"
-  default     = "dop_v1_967082bcc634e17d32d92e9aa5ffaac258105d39a43606a80b58659f1c96e21a"
 }
 
 variable "node_count" {
   type        = number
-  default     = 3
+  default     = 1
   description = "Specifies the number of nodes to create in the cluster"
 }
 
