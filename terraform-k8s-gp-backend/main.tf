@@ -9,6 +9,16 @@ terraform {
       version = "2.11.0"
     }
   }
+
+  backend "s3" {
+    bucket               = "186081-gp-tf-backend-state"
+    workspace_key_prefix = "k8s-cluster"
+    key                  = "backend-state"
+    region               = "eu-central-1"
+    dynamodb_table       = "186081-gp-tf-backend-state_locks"
+    encrypt              = true
+  }
+
 }
 
 provider "digitalocean" {
