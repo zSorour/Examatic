@@ -7,7 +7,7 @@ resource "kubernetes_service" "gp-backend" {
       app = kubernetes_deployment.gp-backend.metadata.0.labels.app
     }
     port {
-      port        = var.port__env
+      port        = 443
       target_port = var.port__env
     }
     type = "LoadBalancer"
