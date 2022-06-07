@@ -1,0 +1,8 @@
+.ExamsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10rem;
+  justify-content: center;
+  align-items: center;
+}

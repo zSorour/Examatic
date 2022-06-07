@@ -30,6 +30,8 @@ export const useHttpClient = () => {
         if (!response.ok) {
           setErrorTitle(responseData.error);
           setErrorDetails(responseData.errorDetails);
+          setIsLoading(false);
+          return;
         }
 
         setIsLoading(false);

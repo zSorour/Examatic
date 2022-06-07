@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div>
       <Link href={"/exam"} passHref={true}>

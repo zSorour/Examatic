@@ -6,7 +6,7 @@ const VNCScreen = dynamic(() =>
   import("../components/VNCScreen/VNCScreen", { ssr: false })
 );
 
-export default function Exam() {
+export default function ExamPage() {
   // Typically, remotePeerID should be retrieved from backend!
   const [remotePeerID, setRemotePeerID] = useState("");
 
