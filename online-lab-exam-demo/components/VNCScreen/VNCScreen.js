@@ -1,12 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import CurrentExamContext from "../../store/current-exam-context/currentExamContext";
 
 import { VncScreen } from "react-vnc";
 
 import styles from "./VNCScreen.module.css";
 import VNCScreenLayout from "./VNCScreenLayout/VNCScreenLayout";
 
-const VNCScreen = ({ vncServerIP }) => {
+const VNCScreen = () => {
   const vncScreenRef = useRef(null);
+  const currentExamCTX = useContext(CurrentExamContext);
 
   return (
     <VNCScreenLayout screenRef={vncScreenRef}>
@@ -19,7 +21,7 @@ const VNCScreen = ({ vncServerIP }) => {
             console.log(text);
           });
         }}
-        url={`ws://${vncServerIP}:6080`}
+        url={`ws://${currentExamCTX.instanceIP}:6080`}
         scaleViewport
       ></VncScreen>
     </VNCScreenLayout>

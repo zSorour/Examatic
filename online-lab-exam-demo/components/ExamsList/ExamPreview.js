@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { Card, CardActions, CardContent } from "@mui/material";
 import AuthContext from "../../store/authContext";
+import CurrentExamContext from "../../store/current-exam-context/currentExamContext";
 import { useHttpClient } from "../../hooks/http-hook";
 import Spinner from "../UI/Spinner/Spinner";
 import { Modal } from "@mui/material";
 import { useStopwatch } from "react-timer-hook";
+import { useRouter } from "next/router";
 
 import styles from "./ExamPreview.module.css";
 import modalStyles from "../../styles/Modal.module.css";
@@ -34,6 +36,8 @@ const formatNumberTwoDigits = (number) => {
 
 export default function ExamPreview({ exam }) {
   const authCTX = useContext(AuthContext);
+  const currentExamCTX = useContext(CurrentExamContext);
+  const router = useRouter();
 
   const { isLoading, errorTitle, errorDetails, sendRequest, clearError } =
     useHttpClient();
@@ -54,8 +58,10 @@ export default function ExamPreview({ exam }) {
           "Content-Type": "application/json"
         }
       );
-      console.log(data);
       reset();
+      const { publicIP, tempPassword } = data;
+      currentExamCTX.setCurrentExam(publicIP, tempPassword);
+      router.push("/exams/current-exam");
     } catch (err) {}
   };
 
