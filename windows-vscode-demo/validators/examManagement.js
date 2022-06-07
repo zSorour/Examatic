@@ -18,6 +18,7 @@ module.exports.createExamValidator = () => [
       "Start date time must follow ISO 8601. Example: 2020-01-01T00:00:00Z"
     ),
   check("courseCode").notEmpty().withMessage("Course code must not be empty."),
+  check("courseName").notEmpty().withMessage("Course name must not be empty."),
   check("instructorID")
     .notEmpty()
     .withMessage("Instructor ID (createdBy) must not be empty."),

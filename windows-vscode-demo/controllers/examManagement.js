@@ -17,6 +17,7 @@ module.exports.createExam = async (req, res, next) => {
     name,
     duration,
     startDateTime,
+    courseName,
     courseCode,
     instructorID,
     instanceTemplateName
@@ -26,7 +27,11 @@ module.exports.createExam = async (req, res, next) => {
   let promisesResults;
   try {
     promisesResults = await Promise.all([
-      instructorService.isInstructorEnrolledToCourse(instructorID, courseCode),
+      instructorService.isInstructorEnrolledToCourse(
+        instructorID,
+        courseName,
+        courseCode
+      ),
       instanceTemplateSerivce.doesInstanceTemplateExist(instanceTemplateName),
       examService.isExamUnique(name)
     ]);
@@ -67,6 +72,7 @@ module.exports.createExam = async (req, res, next) => {
       duration,
       startDateTime,
       instructor._id,
+      courseName,
       courseCode,
       instanceTemplate,
       terraformResult

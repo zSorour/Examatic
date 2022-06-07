@@ -41,6 +41,7 @@ module.exports.createExam = async (
   duration,
   startDateTime,
   instructorID,
+  courseName,
   courseCode,
   instanceTemplate,
   terraformResult
@@ -49,6 +50,7 @@ module.exports.createExam = async (
     name: name.toUpperCase(),
     duration,
     startDateTime,
+    courseName,
     createdBy: instructorID,
     instanceTemplate: instanceTemplate,
     vpcID: terraformResult.vpc_id.value,

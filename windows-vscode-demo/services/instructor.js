@@ -6,6 +6,7 @@ const Instructor = require("../models/Instructor");
 
 module.exports.isInstructorEnrolledToCourse = async (
   instructorID,
+  courseName,
   courseCode
 ) => {
   const promise = new Promise(async (resolve, reject) => {
@@ -19,7 +20,10 @@ module.exports.isInstructorEnrolledToCourse = async (
     try {
       console.log(courseCode);
       console.log(instructorID);
-      const course = await Course.findOne({ code: courseCode });
+      const course = await Course.findOne({
+        name: courseName,
+        code: courseCode
+      });
       instructor = await Instructor.findOne({
         _id: ObjectId(instructorID),
         assignedCourses: course._id

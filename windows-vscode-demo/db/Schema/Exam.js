@@ -8,6 +8,10 @@ const ExamSchema = new Schema({
     type: "String",
     required: true
   },
+  courseName: {
+    type: "String",
+    required: true
+  },
   duration: {
     type: "Number",
     required: true
