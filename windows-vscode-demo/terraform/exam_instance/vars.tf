@@ -15,3 +15,7 @@ variable "ami_name" {
   type    = string
   default = "win-basic"
 }
+
+variable "admin_pass" {
+  type = string
+}
