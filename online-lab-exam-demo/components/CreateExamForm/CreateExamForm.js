@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { useStopwatch } from "react-timer-hook";
 import { useHttpClient } from "../../hooks/http-hook";
 import AuthContext from "../../store/auth-context/authContext";
 import Spinner from "../UI/Spinner/Spinner";
@@ -8,12 +9,31 @@ import { Modal } from "@mui/material";
 
 import styles from "./CreateExamForm.module.css";
 import modalStyles from "../../styles/Modal.module.css";
-import { useRouter } from "next/router";
+
+const parseDateTime = (date, time) => {
+  const [hh, mm] = time.split(":");
+  const dateTime = new Date(date + "T00:00");
+  dateTime.setHours(hh);
+  dateTime.setMinutes(mm);
+  return dateTime.toISOString();
+};
+
+const formatNumberTwoDigits = (number) => {
+  return number.toLocaleString("en-US", {
+    minimumIntegerDigits: 2
+  });
+};
 
 export default function CreateExamForm() {
   const [instanceTemplates, setInstanceTemplates] = useState([]);
   const [courses, setCourses] = useState([]);
   const [instanceTemplateInfo, setInstanceTemplateInfo] = useState("");
+
+  const [isCreatingInstance, setIsCreatingInstance] = useState(false);
+
+  const router = useRouter();
+
+  const { seconds, minutes, start, reset } = useStopwatch({ autoStart: false });
 
   const {
     register,
@@ -59,7 +79,39 @@ export default function CreateExamForm() {
   };
 
   const onSubmit = async (formData) => {
-    console.log(formData);
+    const course = JSON.parse(formData.courseNameCode);
+    const courseCode = course.code;
+    const courseName = course.name;
+    const { name, duration, startDate, startTime, instanceTemplateName } =
+      formData;
+    const startDateTime = parseDateTime(startDate, startTime);
+    console.log(startDateTime);
+
+    try {
+      setIsCreatingInstance(true);
+      start();
+      const data = await sendRequest(
+        `http://localhost:5000/exam-management/create-exam`,
+        "POST",
+        JSON.stringify({
+          name,
+          duration,
+          startDateTime,
+          courseCode,
+          courseName,
+          instanceTemplateName,
+          instructorID: authCTX.id
+        }),
+        { "Content-Type": "application/json" }
+      );
+      setIsCreatingInstance(false);
+      reset();
+      if (!data.error) {
+        router.push("/instructors/exams");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -83,7 +135,10 @@ export default function CreateExamForm() {
               {courses.map((course) => (
                 <option
                   key={course._id}
-                  value={{ code: course.code, name: course.name }}
+                  value={JSON.stringify({
+                    code: course.code,
+                    name: course.name
+                  })}
                 >{`${course.code} - ${course.name}`}</option>
               ))}
             </select>
@@ -182,7 +237,23 @@ export default function CreateExamForm() {
 
       <Modal open={isLoading} className={modalStyles.Modal}>
         <div className={modalStyles.ModalContent}>
+          {isCreatingInstance && (
+            <p className={modalStyles.Message}>
+              Creating the exam network infrastructure for the first time takes
+              around 40 seconds.
+            </p>
+          )}
           <Spinner />
+          {isCreatingInstance && (
+            <React.Fragment>
+              <p className={modalStyles.Message}>Elapsed Time</p>
+              <p className={modalStyles.Message}>
+                {`${formatNumberTwoDigits(minutes)}:${formatNumberTwoDigits(
+                  seconds
+                )}`}
+              </p>
+            </React.Fragment>
+          )}
         </div>
       </Modal>
     </React.Fragment>
