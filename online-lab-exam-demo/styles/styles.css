@@ -21,16 +21,24 @@ body {
   margin: 0;
 }
 
-input {
+input,
+select {
   transition: all 0.2s ease-in-out;
   font-size: 1rem;
 }
 
 input:focus,
-input:hover {
+input:hover,
+select:focus,
+select:hover {
   outline: none;
   filter: drop-shadow(0px 0px 10px rgba(204, 22, 113, 0.541));
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
+}
+
+textarea:focus {
+  outline: none;
+  cursor: not-allowed;
 }
 
 * {

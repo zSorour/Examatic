@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
@@ -49,7 +49,9 @@ const LoginForm = () => {
         className={styles.Avatar}
         sx={{ width: "80px", height: "80px", backgroundColor: "white" }}
       >
-        <LockOpenOutlined sx={{ fill: "#292f6b", width: "50px", height: "50px" }} />
+        <LockOpenOutlined
+          sx={{ fill: "#292f6b", width: "50px", height: "50px" }}
+        />
       </Avatar>
 
       <div className={styles.Input}>

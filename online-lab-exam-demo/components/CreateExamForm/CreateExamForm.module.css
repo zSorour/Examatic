@@ -1,0 +1,84 @@
+.CreateExamForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--translucent-primary);
+  padding: 80px 80px;
+  border-radius: 50px;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.7);
+}
+
+.CreateExamForm .Input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  width: 100%;
+}
+
+.CreateExamForm .Input input,
+.CreateExamForm .Input select {
+  border-radius: 25px;
+  width: 30rem;
+  height: 3rem;
+  padding: 10px;
+  border: none;
+}
+
+.CreateExamForm .Input select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='4   ' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1.2rem center;
+  background-size: 1em;
+  font-size: 0.8em;
+}
+
+.CreateExamForm .Input label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.CreateExamForm .Input textarea {
+  font-size: 0.8em;
+  margin-top: 15px;
+  border-radius: 25px;
+  width: 30rem;
+  height: 10rem;
+  padding: 10px;
+  border: none;
+  resize: none;
+  background-color: rgb(218, 218, 218);
+}
+
+.CreateExamForm .Error {
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.822);
+  border-radius: 25px;
+  width: 30rem;
+  text-align: center;
+  margin: 10px;
+}
+
+.CreateExamForm .Button {
+  margin-top: 30px;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 0px 15px 50px black;
+  padding: 2% 10%;
+  font-weight: bold;
+  border: none;
+  filter: drop-shadow(0px 0px 10px rgba(204, 22, 113, 0.541));
+}
+
+.CreateExamForm .Button:hover {
+  background-color: rgba(255, 255, 255, 0.877);
+  cursor: pointer;
+  transform: scale(1.2);
+}
