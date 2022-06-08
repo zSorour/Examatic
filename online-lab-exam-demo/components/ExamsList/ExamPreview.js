@@ -61,7 +61,9 @@ export default function ExamPreview({ exam }) {
       reset();
       const { publicIP, tempPassword } = data;
       currentExamCTX.setCurrentExam(publicIP, tempPassword);
-      router.push("/exams/current-exam");
+      if (!data.error) {
+        router.push("/students/exams/current-exam");
+      }
     } catch (err) {}
   };
 
