@@ -6,7 +6,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import AuthContext from "../../../store/auth-context/authContext";
 import modalStyles from "../../../styles/Modal.module.css";
 
-export default function ExamsPage() {
+export default function StudentExamsPage() {
   const [exams, setExams] = useState();
   const { isLoading, errorTitle, errorDetails, sendRequest, clearError } =
     useHttpClient();
