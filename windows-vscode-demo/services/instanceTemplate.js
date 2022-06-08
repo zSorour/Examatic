@@ -31,3 +31,24 @@ module.exports.doesInstanceTemplateExist = async (instanceTemplateName) => {
   });
   return promise;
 };
+
+module.exports.getInstanceTemplates = async () => {
+  const promise = new Promise(async (resolve, reject) => {
+    let instanceTemplates;
+    try {
+      instanceTemplates = await InstanceTemplate.find();
+    } catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        "Server Error",
+        ["Couldn't get instance templates."],
+        500
+      );
+      return reject(error);
+    }
+
+    resolve(instanceTemplates);
+  });
+
+  return promise;
+};

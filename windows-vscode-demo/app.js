@@ -8,6 +8,8 @@ const { initiateDBConnection } = require("./db/db");
 const authRouter = require("./routes/auth");
 const examManagementRouter = require("./routes/examManagement");
 const studentRouter = require("./routes/student");
+const instanceTemplateRouter = require("./routes/instanceTemplate");
+const instructorRouter = require("./routes/instructor");
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -38,6 +40,10 @@ app.use("/auth", authRouter);
 app.use("/exam-management", examManagementRouter);
 
 app.use("/student", studentRouter);
+
+app.use("/instance-templates", instanceTemplateRouter);
+
+app.use("/instructor", instructorRouter);
 
 app.use("/api/test-docker", (req, res) => {
   res.send(`Hello from Docker, Hostname: ${os.hostname()} PID: ${process.pid}`);

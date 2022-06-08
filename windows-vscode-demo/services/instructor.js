@@ -18,8 +18,6 @@ module.exports.isInstructorEnrolledToCourse = async (
     );
 
     try {
-      console.log(courseCode);
-      console.log(instructorID);
       const course = await Course.findOne({
         name: courseName,
         code: courseCode
@@ -37,6 +35,49 @@ module.exports.isInstructorEnrolledToCourse = async (
     } else {
       reject(error);
     }
+  });
+
+  return promise;
+};
+
+module.exports.getInstructorCourses = async (username) => {
+  const promise = new Promise(async (resolve, reject) => {
+    let instructor;
+    try {
+      instructor = await Instructor.findOne({ username: username });
+    } catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        "Server Error",
+        ["Couldn't get instructor's courses."],
+        500
+      );
+      return reject(error);
+    }
+
+    if (!instructor) {
+      const error = new HttpError(
+        "Invalid Instructor",
+        ["No instructor with the given username exists."],
+        404
+      );
+      return reject(error);
+    }
+
+    try {
+      console.log(instructor.assignedCourses);
+      await instructor.populate("assignedCourses");
+    } catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        "Server Error",
+        ["Couldn't get instructor's courses."],
+        500
+      );
+      return reject(error);
+    }
+
+    resolve(instructor.assignedCourses);
   });
 
   return promise;
