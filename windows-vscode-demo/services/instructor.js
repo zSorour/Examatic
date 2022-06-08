@@ -65,7 +65,6 @@ module.exports.getInstructorCourses = async (username) => {
     }
 
     try {
-      console.log(instructor.assignedCourses);
       await instructor.populate("assignedCourses");
     } catch (err) {
       console.log(err);

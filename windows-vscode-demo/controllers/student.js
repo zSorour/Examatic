@@ -15,7 +15,6 @@ module.exports.getStudentExams = async (req, res, next) => {
   }
 
   const studentExams = enrolledExams.map((exam) => {
-    console.log(exam);
     return {
       id: exam._id,
       name: exam.name,
