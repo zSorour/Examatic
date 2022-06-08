@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import NavigationItems from "../NavigationItems/NavigationItems";
 import classes from "./SideDrawer.module.css";
 import Backdrop from "../../UI/Backdrop/Backdrop";
-import AuthContext from "../../../store/auth-context/authContext";
 
 const SideDrawer = (props) => {
-  const authCTX = useContext(AuthContext);
-
   let attachedClasses = [classes.SideDrawer, classes.Close];
   if (props.open) {
     attachedClasses = [classes.SideDrawer, classes.Open];
@@ -20,7 +17,7 @@ const SideDrawer = (props) => {
           <h1>GP Demo</h1>
         </div>
         <nav>
-          <NavigationItems isAuthenticated={!!authCTX.token} />
+          <NavigationItems />
         </nav>
       </div>
     </React.Fragment>
