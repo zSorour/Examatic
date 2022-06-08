@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import classes from "./SideDrawer.module.css";
 import Backdrop from "../../UI/Backdrop/Backdrop";
-import AuthContext from "../../../store/authContext";
+import AuthContext from "../../../store/auth-context/authContext";
 
 const SideDrawer = (props) => {
   const authCTX = useContext(AuthContext);

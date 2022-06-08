@@ -5,6 +5,7 @@ const AuthContext = createContext({
   username: "",
   id: "",
   token: "",
+  role: "",
   login: (id, username, role, token) => {},
   logout: () => {}
 });

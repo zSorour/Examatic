@@ -1,6 +1,6 @@
 import React from "react";
 
-import AuthProvider from "../store/AuthProvider";
+import AuthProvider from "../store/auth-context/AuthProvider";
 import CurrentExamProvider from "../store/current-exam-context/CurrentExamProvider";
 import Layout from "../components/Layout/Layout";
 import "../styles/styles.css";

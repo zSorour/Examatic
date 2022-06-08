@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Card, CardActions, CardContent } from "@mui/material";
-import AuthContext from "../../store/authContext";
+import AuthContext from "../../store/auth-context/authContext";
 import CurrentExamContext from "../../store/current-exam-context/currentExamContext";
 import { useHttpClient } from "../../hooks/http-hook";
 import Spinner from "../UI/Spinner/Spinner";

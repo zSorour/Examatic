@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
 import { useHttpClient } from "../../hooks/http-hook";
-import AuthContext from "../../store/authContext";
+import AuthContext from "../../store/auth-context/authContext";
 import styles from "./LoginForm.module.css";
 import modalStyles from "../../styles/Modal.module.css";
 import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";

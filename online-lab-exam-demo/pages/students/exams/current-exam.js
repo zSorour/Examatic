@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Peer from "peerjs";
 
 const VNCScreen = dynamic(() =>
-  import("../../components/VNCScreen/VNCScreen", { ssr: false })
+  import("../../../components/VNCScreen/VNCScreen", { ssr: false })
 );
 
 export default function CurrentExamPage() {

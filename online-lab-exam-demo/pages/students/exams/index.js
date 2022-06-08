@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from "react";
-import ExamsList from "../../components/ExamsList/ExamsList";
-import { useHttpClient } from "../../hooks/http-hook";
+import ExamsList from "../../../components/ExamsList/ExamsList";
+import { useHttpClient } from "../../../hooks/http-hook";
 import { Modal } from "@mui/material";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import AuthContext from "../../store/authContext";
-import modalStyles from "../../styles/Modal.module.css";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import AuthContext from "../../../store/auth-context/authContext";
+import modalStyles from "../../../styles/Modal.module.css";
 
 export default function ExamsPage() {
   const [exams, setExams] = useState();
