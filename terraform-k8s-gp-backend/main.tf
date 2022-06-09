@@ -38,7 +38,9 @@ resource "digitalocean_kubernetes_cluster" "gp-k8s-cluster" {
 
   node_pool {
     name       = "worker-pool"
-    size       = "s-2vcpu-4gb"
-    node_count = var.node_count
+    size       = "s-4vcpu-8gb"
+    auto_scale = true
+    min_nodes  = 1
+    max_nodes  = 3
   }
 }
