@@ -1,11 +1,5 @@
-variable "digital_ocean_token" {
+variable "digital_ocean_token__env" {
   description = "value of the DigitalOcean API token"
-}
-
-variable "node_count" {
-  type        = number
-  default     = 1
-  description = "Specifies the number of nodes to create in the cluster"
 }
 
 variable "docker_image" {
