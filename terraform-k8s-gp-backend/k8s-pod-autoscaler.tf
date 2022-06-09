@@ -1,28 +1,28 @@
-# resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
+resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
 
-#   metadata {
-#     name = "gp-backend-autoscaler"
-#   }
-#   spec {
-#     min_replicas = 1
-#     max_replicas = 20
+  metadata {
+    name = "gp-backend-autoscaler"
+  }
+  spec {
+    min_replicas = 1
+    max_replicas = 10
 
-#     scale_target_ref {
-#       api_version = "apps/v1"
-#       kind        = "Deployment"
-#       name        = kubernetes_deployment.gp-backend.metadata.0.name
-#     }
+    scale_target_ref {
+      api_version = "apps/v1"
+      kind        = "Deployment"
+      name        = kubernetes_deployment.gp-backend.metadata.0.name
+    }
 
-#     metric {
-#       type = "Resource"
-#       resource {
-#         name = "cpu"
-#         target {
-#           type                = "Utilization"
-#           average_utilization = 90
-#         }
-#       }
-#     }
-#   }
-#   depends_on = [null_resource.local_provisioner_kubectl]
-# }
+    metric {
+      type = "Resource"
+      resource {
+        name = "cpu"
+        target {
+          type                = "Utilization"
+          average_utilization = 90
+        }
+      }
+    }
+  }
+  depends_on = [null_resource.local_provisioner_kubectl]
+}
