@@ -7,7 +7,6 @@ resource "kubernetes_deployment" "gp-backend" {
   }
 
   spec {
-    replicas = var.node_count
     selector {
       match_labels = {
         app = "gp-backend"
