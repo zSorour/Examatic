@@ -24,12 +24,16 @@ resource "kubernetes_deployment" "gp-backend" {
         container {
           name  = "gp-backend"
           image = var.docker_image
-          # resources {
-          #   requests = {
-          #     cpu    = "4"
-          #     memory = "6Gi"
-          #   }
-          # }
+          resources {
+            requests = {
+              cpu    = "2"
+              memory = "2Gi"
+            }
+            limits = {
+              cpu    = "3.5"
+              memory = "7Gi"
+            }
+          }
           port {
             container_port = 5000
           }
