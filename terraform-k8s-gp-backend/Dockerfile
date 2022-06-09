@@ -15,3 +15,5 @@ RUN wget -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_V
 WORKDIR /terraform-k8s-gp-backend
 
 COPY ./ ./
+
+CMD tail -f /dev/null
