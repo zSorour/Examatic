@@ -1,12 +1,14 @@
 resource "kubernetes_deployment" "gp-backend" {
   metadata {
-    name = "gp-backend-deployment"
+    name = "gp-backend"
     labels = {
-      app = "gp-backend-deployment"
+      app = "gp-backend"
     }
   }
 
   spec {
+    replicas = 1
+
     selector {
       match_labels = {
         app = "gp-backend"
@@ -22,12 +24,12 @@ resource "kubernetes_deployment" "gp-backend" {
         container {
           name  = "gp-backend"
           image = var.docker_image
-          resources {
-            requests = {
-              cpu    = "2000m"
-              memory = "2Gi"
-            }
-          }
+          # resources {
+          #   requests = {
+          #     cpu    = "4"
+          #     memory = "6Gi"
+          #   }
+          # }
           port {
             container_port = 5000
           }
