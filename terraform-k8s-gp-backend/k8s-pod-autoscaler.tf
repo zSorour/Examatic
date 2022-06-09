@@ -8,8 +8,9 @@ resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
     max_replicas = 10
 
     scale_target_ref {
-      kind = "Deployment"
-      name = kubernetes_deployment.gp-backend.metadata.0.name
+      api_version = "apps/v1"
+      kind        = "Deployment"
+      name        = kubernetes_deployment.gp-backend.metadata.0.name
     }
 
     metric {

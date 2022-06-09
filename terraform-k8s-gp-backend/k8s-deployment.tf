@@ -1,8 +1,8 @@
 resource "kubernetes_deployment" "gp-backend" {
   metadata {
-    name = "gp-backend"
+    name = "gp-backend-deployment"
     labels = {
-      app = "gp-backend"
+      app = "gp-backend-deployment"
     }
   }
 
@@ -22,6 +22,12 @@ resource "kubernetes_deployment" "gp-backend" {
         container {
           name  = "gp-backend"
           image = var.docker_image
+          resources {
+            requests = {
+              cpu    = "2000m"
+              memory = "2Gi"
+            }
+          }
           port {
             container_port = 5000
           }
