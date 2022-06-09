@@ -24,4 +24,5 @@ resource "kubernetes_horizontal_pod_autoscaler" "autoscaler" {
       }
     }
   }
+  depends_on = [null_resource.local_provisioner_kubectl]
 }
