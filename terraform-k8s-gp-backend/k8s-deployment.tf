@@ -26,12 +26,12 @@ resource "kubernetes_deployment" "gp-backend" {
           image = var.docker_image
           resources {
             requests = {
-              cpu    = "2"
-              memory = "2Gi"
+              cpu    = "0.5"
+              memory = "1Gi"
             }
             limits = {
-              cpu    = "3.5"
-              memory = "7Gi"
+              cpu    = "1.5"
+              memory = "3Gi"
             }
           }
           port {
