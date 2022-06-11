@@ -26,3 +26,7 @@ module.exports.createExamValidator = () => [
     .notEmpty()
     .withMessage("Instance template must not be empty.")
 ];
+
+module.exports.createInvigilationInstanceValidator = () => [
+  check("examID").notEmpty().withMessage("Exam ID must not be empty.")
+];

@@ -11,10 +11,10 @@ examManagementRouter.post(
   examManagementController.createExam
 );
 
-// examManagementRouter.put(examManagementController.editExam);
-
-// examManagementRouter.delete(examManagementController.deleteExam);
-
-// examManagementRouter.get(examManagementController.getExam);
+examManagementRouter.put(
+  "/create-invigilation-instance",
+  examManagementValidator.createInvigilationInstanceValidator(),
+  examManagementController.createInvigilationInstance
+);
 
 module.exports = examManagementRouter;

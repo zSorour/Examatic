@@ -96,7 +96,9 @@ module.exports.getExam = async (examID) => {
   const promise = new Promise(async (resolve, reject) => {
     let exam;
     try {
-      exam = await Exam.findById(examID).select("+vpcID +sgID");
+      exam = await Exam.findById(examID).select(
+        "+vpcID +sgID +invigilationInstance"
+      );
     } catch (err) {
       const error = new HttpError(
         "Server Error",
