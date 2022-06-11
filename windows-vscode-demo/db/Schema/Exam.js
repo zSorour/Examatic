@@ -35,6 +35,9 @@ const ExamSchema = new Schema({
     instanceIP: {
       type: "String"
     },
+    peerID: {
+      type: "String"
+    },
     instancePassword: {
       type: "String"
     },

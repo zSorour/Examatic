@@ -73,10 +73,11 @@ module.exports.connectToExam = async (req, res, next) => {
   ];
   let terraformResult;
   try {
+    const workspaceName = `${username}_${examID}`;
     const startTime = performance.now();
     terraformResult = await terraformService.createTerraformInfrastructure(
       terraformDir,
-      username,
+      workspaceName,
       tfVariables
     );
     console.log(
