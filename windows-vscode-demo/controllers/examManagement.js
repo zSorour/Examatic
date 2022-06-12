@@ -23,7 +23,7 @@ module.exports.createExam = async (req, res, next) => {
     instanceTemplateName
   } = req.body;
 
-  // Call promises in parallel. If anyone fails/rejects, all promises are rejected.
+  // Call promises in parallel. If anyone fails/rejects, all promises are rejected automatically.
   let promisesResults;
   try {
     promisesResults = await Promise.all([
@@ -39,7 +39,7 @@ module.exports.createExam = async (req, res, next) => {
     return next(error);
   }
 
-  // Use array destructuring to get the results of both promises.
+  // Use array destructuring to get the results of first two promises.
   const [instructor, instanceTemplate] = promisesResults;
 
   // Create a VPC and a security group for the exam.
