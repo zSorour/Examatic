@@ -89,69 +89,69 @@ module.exports.createExam = async (req, res, next) => {
   }
 };
 
-module.exports.createInvigilationInstance = async (req, res, next) => {
-  const validationErrors = validationResult(req).array();
-  if (validationErrors.length > 0) {
-    const error = new HttpError("Invalid Exam Data", validationErrors, 422);
-    return next(error);
-  }
+// module.exports.createInvigilationInstance = async (req, res, next) => {
+//   const validationErrors = validationResult(req).array();
+//   if (validationErrors.length > 0) {
+//     const error = new HttpError("Invalid Exam Data", validationErrors, 422);
+//     return next(error);
+//   }
 
-  const { examID } = req.body;
+//   const { examID } = req.body;
 
-  let exam;
+//   let exam;
 
-  try {
-    exam = await examService.getExam(examID);
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  }
+//   try {
+//     exam = await examService.getExam(examID);
+//   } catch (err) {
+//     console.log(err);
+//     return next(err);
+//   }
 
-  // call terraform service to create an invigilation instance.
-  const terraformDir = "terraform/invigilation_instance";
-  let terraformResult;
-  try {
-    const startTime = performance.now();
-    terraformResult = await terraformService.createTerraformInfrastructure(
-      terraformDir,
-      exam.name
-    );
-    console.log(
-      `Exam invigilation instance created in: ${
-        performance.now() - startTime
-      } ms`
-    );
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Server Error",
-      ["Failure to create invigilation instance, please try again later."],
-      500
-    );
-    return next(error);
-  }
+//   // call terraform service to create an invigilation instance.
+//   const terraformDir = "terraform/invigilation_instance";
+//   let terraformResult;
+//   try {
+//     const startTime = performance.now();
+//     terraformResult = await terraformService.createTerraformInfrastructure(
+//       terraformDir,
+//       exam.name
+//     );
+//     console.log(
+//       `Exam invigilation instance created in: ${
+//         performance.now() - startTime
+//       } ms`
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     const error = new HttpError(
+//       "Server Error",
+//       ["Failure to create invigilation instance, please try again later."],
+//       500
+//     );
+//     return next(error);
+//   }
 
-  // TODO: generate peer id from PeerJS
+//   // TODO: generate peer id from PeerJS
 
-  // set the invigilation instance in the exam.
-  exam.invigilationInstance = {
-    instanceIP: terraformResult.instance_ip.value,
-    // TODO: set peerID to peer id generated above
-    instancePassword: terraformResult.instance_password.value
-  };
+//   // set the invigilation instance in the exam.
+//   exam.invigilationInstance = {
+//     instanceIP: terraformResult.instance_ip.value,
+//     // TODO: set peerID to peer id generated above
+//     instancePassword: terraformResult.instance_password.value
+//   };
 
-  // save (update) exam info
-  try {
-    exam.save();
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Server Error",
-      ["Failure to create exam, please try again later."],
-      500
-    );
-    return next(error);
-  }
+//   // save (update) exam info
+//   try {
+//     exam.save();
+//   } catch (err) {
+//     console.log(err);
+//     const error = new HttpError(
+//       "Server Error",
+//       ["Failure to create exam, please try again later."],
+//       500
+//     );
+//     return next(error);
+//   }
 
-  res.send({ message: "Invigilation instance created successfully!" });
-};
+//   res.send({ message: "Invigilation instance created successfully!" });
+// };
