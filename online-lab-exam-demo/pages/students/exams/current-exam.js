@@ -61,7 +61,7 @@ export default function CurrentExamPage() {
       });
     });
 
-    socket.current.on("callAccepted", (signal) => {
+    socket.current.on("connectionAccepted", (signal) => {
       peer.signal(signal);
     });
   };
