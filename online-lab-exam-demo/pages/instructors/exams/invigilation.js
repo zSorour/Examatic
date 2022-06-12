@@ -13,13 +13,13 @@ export default function InvigilationPage() {
 
   // a function to put value into the state map immutably.
   const putInStudentStreamsMap = (k, v) => {
-    setStudentStreams(studentStreams.set(k, v));
+    setStudentStreams(new Map(studentStreams.set(k, v)));
   };
 
   useEffect(() => {
-    socket.current = SocketIOClient.connect(
-      "http://localhost:5000/invigilation"
-    );
+    socket.current = SocketIOClient.connect("http://localhost:5000", {
+      path: "/invigilation"
+    });
 
     socket.current.on("givenSocketID", (id) => {
       setMySocketID(id);
@@ -27,6 +27,7 @@ export default function InvigilationPage() {
 
     socket.current.on("incomingConnection", (data) => {
       const { studentSocketID, username, signal } = data;
+      console.log("incoming connection: ", data);
       acceptIncomingConnection(username, studentSocketID, signal);
     });
   }, []);
@@ -44,6 +45,7 @@ export default function InvigilationPage() {
       Listen on signal from student. When a signal is received, signal the user back as handshake process.
     */
     peer.on("signal", (data) => {
+      console.log("Received signal: ", data);
       socket.current.emit("acceptIncomingConnection", {
         signal: data,
         toStudentSocketID: studentSocketID
@@ -54,6 +56,7 @@ export default function InvigilationPage() {
       On receiving stream from student, add it to the map of streams keyed to the student username.
     */
     peer.on("stream", (stream) => {
+      console.log("Received stream!!!");
       putInStudentStreamsMap(studentUsername, stream);
     });
 

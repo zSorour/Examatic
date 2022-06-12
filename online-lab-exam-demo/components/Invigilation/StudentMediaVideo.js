@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 import styles from "./StudentMediaVideo.module.css";
 
 export default function StudentMediaVideo({ studentStream, studentUsername }) {
-  const studentVideoRef = useRef(null);
-  studentVideoRef.current.srcObject = studentStream;
+  const studentVideoRef = useRef();
+  useEffect(() => {
+    studentVideoRef.current.srcObject = studentStream;
+  }, []);
   return (
     <li className={styles.VideoContainer}>
-      <video playsInline autoPlay ref={studentVideoRef} />
-      <p>{studentUsername}</p>
+      <div className={styles.VideoOverlay}>
+        <p>{studentUsername}</p>
+      </div>
+      <video autoPlay ref={studentVideoRef} />
     </li>
   );
 }

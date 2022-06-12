@@ -12,7 +12,6 @@ const VNCScreen = dynamic(() =>
 
 export default function CurrentExamPage() {
   const socket = useRef(null);
-  const [studentStream, setStudentStream] = useState(null);
   const [mySocketID, setMySocketID] = useState(null);
   const authCTX = useContext(AuthContext);
   const [invigilationInstanceSocketID, setInvigilationInstanceSocketID] =
@@ -21,47 +20,47 @@ export default function CurrentExamPage() {
   useEffect(() => {
     // TODO: fetch invigilation instance socket ID from backend and set it as state variable.
 
-    socket.current = SocketIOClient.connect(
-      "http://localhost:5000/invigilation"
-    );
+    socket.current = SocketIOClient.connect("http://localhost:5000", {
+      path: "/invigilation"
+    });
 
     socket.current.on("givenSocketID", (id) => {
       setMySocketID(id);
     });
-
-    const media = getStudentMedia({ audio: true, video: true });
-    setStudentStream(media);
-
-    shareStudentMediaToInvigilationInstance();
   }, []);
 
-  const getStudentMedia = async (constraints) => {
+  const getStudentScreenMedia = async (constraints) => {
     let stream;
     try {
-      stream = await navigator.mediaDevices.getUserMedia(constraints);
+      stream = await navigator.mediaDevices.getDisplayMedia(constraints);
       return stream;
     } catch (err) {
       console.log(err);
     }
   };
 
-  const shareStudentMediaToInvigilationInstance = () => {
+  const shareStudentMediaToInvigilationInstance = async () => {
+    const media = await getStudentScreenMedia({ audio: true, video: true });
+
     const peer = new Peer({
       initiator: true,
       trickle: false,
-      stream: studentStream
+      stream: media
     });
 
     peer.on("signal", (data) => {
+      console.log(mySocketID);
       socket.current.emit("outgoingConnection", {
         fromStudentSocketID: mySocketID,
-        toInvigilationSocketID: invigilationInstanceSocketID,
+        toInvigilationSocketID: "MZnuX3Xp18rdYnJPAADZ",
         signal: data,
-        username: authCTX.username
+        username: "ahmad186081"
       });
     });
 
     socket.current.on("connectionAccepted", (signal) => {
+      console.log("Connection Accepted");
+      console.log(signal);
       peer.signal(signal);
     });
   };
@@ -69,6 +68,9 @@ export default function CurrentExamPage() {
   return (
     <div>
       <main>
+        <button onClick={shareStudentMediaToInvigilationInstance}>
+          Share Screen
+        </button>
         <VNCScreen />
       </main>
     </div>
