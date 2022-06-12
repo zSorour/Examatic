@@ -22,7 +22,7 @@ WORKDIR /app
 # note: a .dockerignore file is used to ignore files that should not be copied such as node_modules
 COPY ./ ./
 
-# allow execution permissions on the entrypoint shell file
+# allow execution permissions on the entrypoint shell file, and install required node_modules
 RUN chmod +x ./docker-entrypoint.sh && npm install && npm install pm2 --save -g
 
 EXPOSE 5000
