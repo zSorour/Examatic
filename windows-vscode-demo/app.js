@@ -1,7 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const { ExpressPeerServer } = require("peer");
 const os = require("os");
 
 const { initiateDBConnection } = require("./db/db");
@@ -10,6 +9,7 @@ const examManagementRouter = require("./routes/examManagement");
 const studentRouter = require("./routes/student");
 const instanceTemplateRouter = require("./routes/instanceTemplate");
 const instructorRouter = require("./routes/instructor");
+const SocketIO = require("./SocketIO");
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -24,16 +24,7 @@ const server = app.listen(PORT, () => {
   initiateDBConnection();
 });
 
-/*
- Create a 'Peer Server' to act as a connection broker between peers.
- No p2p data goes through the server! The server is only a connection broker.
-*/
-const peerJSServer = ExpressPeerServer(server, {
-  path: "/"
-});
-
-// attach peerJS broker to the route '/peerjs-broker'
-app.use("/peerjs-broker", peerJSServer);
+SocketIO.initializeServer(server);
 
 app.use("/auth", authRouter);
 

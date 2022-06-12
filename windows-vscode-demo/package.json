@@ -21,6 +21,6 @@
     "mongoose": "^6.2.9",
     "mongoose-unique-validator": "^3.0.0",
     "nodemon": "^2.0.15",
-    "peer": "^0.6.1"
+    "socket.io": "^4.5.1"
   }
 }
