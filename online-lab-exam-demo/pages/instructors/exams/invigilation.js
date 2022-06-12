@@ -1,35 +1,61 @@
-import { useEffect, useRef } from "react";
-import Peer from "peerjs";
+import React, { useState, useRef, useEffect } from "react";
+
+import Peer from "simple-peer";
+import SocketIOClient from "socket.io-client";
+import StudentsMediaVideoList from "../../../components/Invigilation/StudentsMediaVideoList";
+
+import styles from "./Invigilation.module.css";
+
 export default function InvigilationPage() {
-  const remoteVideoRef = useRef(null);
+  const socket = useRef(null);
+  const [studentStreams, setStudentStreams] = useState(new Map());
+
+  // a function to put value into the state map immutably.
+  const putInStudentStreamsMap = (k, v) => {
+    setStudentStreams(studentStreams.set(k, v));
+  };
 
   useEffect(() => {
-    // TODO: Check if there exists a peer ID from the backend
-    // If there is, use it. Else, create new id using Peer Constructor.
-    // then save Peer ID in DB.
-    const peerInstance = new Peer({
-      host: "localhost",
-      port: 5000,
-      path: "peerjs-broker"
-    });
+    socket.current = SocketIOClient.connect(
+      "http://localhost:5000/invigilation"
+    );
 
-    peerInstance.on("open", (id) => {
-      console.log(`Invigilation instance ID: ${id}`);
-
-      // on receiving a call from any peer.
-      peerInstance.on("call", (call) => {
-        call.answer();
-        call.on("stream", (remoteStream) => {
-          remoteVideoRef.current.srcObject = remoteStream;
-          remoteVideoRef.current.play();
-        });
-      });
+    socket.current.on("incomingConnection", (data) => {
+      const studentUsername = data.from;
+      const studentSignal = data.signal;
+      acceptIncomingConnection(studentUsername, studentSignal);
     });
   }, []);
 
+  const acceptIncomingConnection = async (studentUsername, studentSignal) => {
+    const peer = new Peer({
+      initiator: false
+    });
+
+    /*
+      Listen on signal from student. When a signal is received, signal the user back as handshake process.
+    */
+    peer.on("signal", (data) => {
+      socket.current.emit("accept-incoming-connection", {
+        signal: data,
+        to: studentUsername
+      });
+    });
+
+    /*
+      On receiving stream from student, add it to the map of streams keyed to the student username.
+    */
+    peer.on("stream", (stream) => {
+      putInStudentStreamsMap(studentUsername, stream);
+    });
+
+    // ??? is this needed?
+    peer.signal(studentSignal);
+  };
+
   return (
-    <div>
-      <video ref={remoteVideoRef} />
-    </div>
+    <main>
+      <StudentsMediaVideoList studentStreams={studentStreams} />
+    </main>
   );
 }

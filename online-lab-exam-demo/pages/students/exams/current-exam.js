@@ -33,14 +33,6 @@ export default function CurrentExamPage() {
   return (
     <div>
       <main>
-        {/* <div>
-          <input
-            value={remotePeerID}
-            onChange={(e) => setRemotePeerID(e.target.value)}
-          />
-          <button onClick={() => connectToPeer(remotePeerID)}>Connect</button>
-        </div> */}
-
         <VNCScreen />
       </main>
     </div>
