@@ -9,6 +9,7 @@ export default function StudentsMediaVideoList({ studentStreams }) {
         <StudentMediaVideo
           key={studentUsername}
           studentStream={studentStreams.get(studentUsername)}
+          studentUsername={studentUsername}
         />;
       })}
     </ul>

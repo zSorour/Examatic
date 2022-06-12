@@ -1,0 +1,13 @@
+.VideoContainer {
+  display: flex;
+  width: max-content;
+  height: max-content;
+  justify-content: center;
+  align-items: center;
+}
+
+.VideoContainer video {
+  width: 600px;
+  height: 400px;
+  border-radius: 20px;
+}

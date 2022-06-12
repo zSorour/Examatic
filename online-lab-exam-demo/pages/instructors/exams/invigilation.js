@@ -9,6 +9,7 @@ import styles from "./Invigilation.module.css";
 export default function InvigilationPage() {
   const socket = useRef(null);
   const [studentStreams, setStudentStreams] = useState(new Map());
+  const [mySocketID, setMySocketID] = useState(null);
 
   // a function to put value into the state map immutably.
   const putInStudentStreamsMap = (k, v) => {
@@ -20,14 +21,21 @@ export default function InvigilationPage() {
       "http://localhost:5000/invigilation"
     );
 
+    socket.current.on("givenSocketID", (id) => {
+      setMySocketID(id);
+    });
+
     socket.current.on("incomingConnection", (data) => {
-      const studentUsername = data.from;
-      const studentSignal = data.signal;
-      acceptIncomingConnection(studentUsername, studentSignal);
+      const { studentSocketID, username, signal } = data;
+      acceptIncomingConnection(username, studentSocketID, signal);
     });
   }, []);
 
-  const acceptIncomingConnection = async (studentUsername, studentSignal) => {
+  const acceptIncomingConnection = async (
+    studentUsername,
+    studentSocketID,
+    studentSignal
+  ) => {
     const peer = new Peer({
       initiator: false
     });
@@ -36,9 +44,9 @@ export default function InvigilationPage() {
       Listen on signal from student. When a signal is received, signal the user back as handshake process.
     */
     peer.on("signal", (data) => {
-      socket.current.emit("accept-incoming-connection", {
+      socket.current.emit("acceptIncomingConnection", {
         signal: data,
-        to: studentUsername
+        toStudentSocketID: studentSocketID
       });
     });
 

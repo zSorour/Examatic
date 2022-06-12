@@ -2,12 +2,13 @@ import React, { useRef } from "react";
 
 import styles from "./StudentMediaVideo.module.css";
 
-export default function StudentMediaVideo({ studentStream }) {
+export default function StudentMediaVideo({ studentStream, studentUsername }) {
   const studentVideoRef = useRef(null);
   studentVideoRef.current.srcObject = studentStream;
   return (
-    <div>
+    <li className={styles.VideoContainer}>
       <video playsInline autoPlay ref={studentVideoRef} />
-    </div>
+      <p>{studentUsername}</p>
+    </li>
   );
 }
