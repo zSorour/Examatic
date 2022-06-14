@@ -93,9 +93,14 @@ export default function StudentExamPreview({ exam }) {
 
   return (
     <React.Fragment>
-      <Card className={styles.Card} sx={{ borderRadius: 10 }}>
-        <CardContent className={styles.CardContent}>
-          <h1>{exam.courseName}</h1>
+      <Card className={styles.Card} sx={{ borderRadius: "30px" }}>
+        <CardContent
+          className={styles.CardContent}
+          sx={{ padding: 0, borderRadius: "25px" }}
+        >
+          <div className={styles.ExamNameWrapper}>
+            <h1>{exam.courseName}</h1>
+          </div>
           <h2>{exam.name}</h2>
           <h2>Duration: {exam.duration} minutes</h2>
           <h3>Date: {formattedDate}</h3>

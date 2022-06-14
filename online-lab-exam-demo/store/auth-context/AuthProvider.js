@@ -1,4 +1,5 @@
 import AuthContext from "./authContext";
+import { useRouter } from "next/router";
 
 import { useState, useEffect } from "react";
 
@@ -11,6 +12,8 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState("");
 
   const [expirationDate, setExpirationDate] = useState();
+
+  const router = useRouter();
 
   const authContext = {
     username: username,
@@ -45,6 +48,7 @@ function AuthProvider({ children }) {
       setToken("");
       setRole("");
       setExpirationDate(null);
+      router.push("/login");
       localStorage.removeItem("user");
     }
   };

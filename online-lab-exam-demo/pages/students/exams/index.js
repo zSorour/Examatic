@@ -6,6 +6,8 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import AuthContext from "../../../store/auth-context/authContext";
 import modalStyles from "../../../styles/Modal.module.css";
 
+import styles from "./StudentExamsPage.module.css";
+
 export default function StudentExamsPage() {
   const [exams, setExams] = useState();
   const { isLoading, errorTitle, errorDetails, sendRequest, clearError } =
@@ -27,10 +29,17 @@ export default function StudentExamsPage() {
   }, [sendRequest]);
 
   return (
-    <div>
-      {!isLoading && exams && (
-        <ExamsList exams={exams} previewType="StudentPreview" />
-      )}
+    <div className={styles.Container}>
+      <div className={styles.LogoutButtonContainer}>
+        <button className={styles.LogoutButton} onClick={authCTX.logout}>
+          Logout
+        </button>
+      </div>
+      <div className={styles.ExamsListContainer}>
+        {!isLoading && exams && (
+          <ExamsList exams={exams} previewType="StudentPreview" />
+        )}
+      </div>
 
       <Modal
         open={!!errorTitle}
