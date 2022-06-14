@@ -1,0 +1,41 @@
+.Card {
+  margin: 50px;
+  min-width: 320px;
+  max-width: 35rem;
+}
+
+.CardContent {
+  text-align: center;
+}
+
+.CardActions {
+  background-color: #292f6bee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Button {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 50px;
+  border: 0;
+  background-color: white;
+}
+
+.Button:hover {
+  filter: drop-shadow(0px 0px 50px rgb(105, 105, 105));
+}
+
+.Button a {
+  text-decoration: none;
+  color: black;
+}
+
+.ActionsMessage {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}

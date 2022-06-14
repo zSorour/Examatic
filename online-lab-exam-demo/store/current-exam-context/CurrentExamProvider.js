@@ -3,13 +3,16 @@ import CurrentExamContext from "./currentExamContext";
 import { useState, useEffect } from "react";
 
 function CurrentExamProvider({ children }) {
+  const [examID, setExamID] = useState("");
   const [instanceIP, setInstanceIP] = useState("");
   const [tempPassword, setTempPassword] = useState("");
 
   const currentExamContext = {
+    examID: examID,
     instanceIP: instanceIP,
     tempPassword: tempPassword,
-    setCurrentExam: (ip, tempPass) => {
+    setCurrentExam: (examID, ip, tempPass) => {
+      setExamID(examID);
       setInstanceIP(ip);
       setTempPassword(tempPass);
 
@@ -22,6 +25,7 @@ function CurrentExamProvider({ children }) {
       //   );
     },
     clearCurrentExam: () => {
+      setExamID("");
       setInstanceIP("");
       setTempPassword("");
       //   localStorage.removeItem("currentExam");

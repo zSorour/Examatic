@@ -4,7 +4,10 @@ import dynamic from "next/dynamic";
 import Peer from "simple-peer";
 import SocketIOClient from "socket.io-client";
 
+import { useHttpClient } from "../../../hooks/http-hook";
+
 import AuthContext from "../../../store/auth-context/authContext";
+import CurrentExamContext from "../../../store/current-exam-context/currentExamContext";
 
 const VNCScreen = dynamic(() =>
   import("../../../components/VNCScreen/VNCScreen", { ssr: false })
@@ -13,12 +16,25 @@ const VNCScreen = dynamic(() =>
 export default function CurrentExamPage() {
   const socket = useRef(null);
   const [mySocketID, setMySocketID] = useState(null);
-  const authCTX = useContext(AuthContext);
   const [invigilationInstanceSocketID, setInvigilationInstanceSocketID] =
     useState(null);
 
+  const authCTX = useContext(AuthContext);
+  const currentExamContext = useContext(CurrentExamContext);
+
+  const { isLoading, errorTitle, errorDetails, sendRequest } = useHttpClient();
+
   useEffect(() => {
-    // TODO: fetch invigilation instance socket ID from backend and set it as state variable.
+    const fetchExamInvigilationInfo = async () => {
+      const { exam } = await sendRequest(
+        `http://localhost:5000/exam-management/?examID=${currentExamContext.examID}`,
+        "GET"
+      );
+      console.log(exam);
+      setInvigilationInstanceSocketID(exam.invigilationInstance.socketID);
+    };
+
+    fetchExamInvigilationInfo();
 
     socket.current = SocketIOClient.connect("http://localhost:5000", {
       path: "/invigilation"
@@ -52,9 +68,9 @@ export default function CurrentExamPage() {
       console.log(mySocketID);
       socket.current.emit("outgoingConnection", {
         fromStudentSocketID: mySocketID,
-        toInvigilationSocketID: "MZnuX3Xp18rdYnJPAADZ",
+        toInvigilationSocketID: invigilationInstanceSocketID,
         signal: data,
-        username: "ahmad186081"
+        username: authCTX.username
       });
     });
 
@@ -67,12 +83,12 @@ export default function CurrentExamPage() {
 
   return (
     <div>
-      <main>
+      <div>
         <button onClick={shareStudentMediaToInvigilationInstance}>
           Share Screen
         </button>
         <VNCScreen />
-      </main>
+      </div>
     </div>
   );
 }

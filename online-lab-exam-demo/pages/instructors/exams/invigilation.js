@@ -1,15 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
+import { Modal } from "@mui/material";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 import Peer from "simple-peer";
 import SocketIOClient from "socket.io-client";
 import StudentsMediaVideoList from "../../../components/Invigilation/StudentsMediaVideoList";
 import { useHttpClient } from "../../../hooks/http-hook";
 
-import styles from "./Invigilation.module.css";
+import modalStyles from "../../../styles/Modal.module.css";
 
 export default function InvigilationPage() {
   const socket = useRef(null);
+  const [isWaitingForStudents, setIsWaitingForStudents] = useState(true);
   const [studentStreams, setStudentStreams] = useState(new Map());
   // a function to put value into the state map immutably.
   const putInStudentStreamsMap = (k, v) => {
@@ -29,7 +32,7 @@ export default function InvigilationPage() {
     const { IPv4 } = await getIPAddress();
     const examID = router.query.examID;
     const invigilationInfoUpdate = {
-      socketID: id,
+      socketID: socketID,
       instanceIP: IPv4,
       examID: examID
     };
@@ -81,14 +84,23 @@ export default function InvigilationPage() {
     */
     peer.on("stream", (stream) => {
       putInStudentStreamsMap(studentUsername, stream);
+      setIsWaitingForStudents(false);
     });
 
     peer.signal(studentSignal);
   };
 
   return (
-    <main>
+    <div>
       <StudentsMediaVideoList studentStreams={studentStreams} />
-    </main>
+      <Modal open={isWaitingForStudents} className={modalStyles.Modal}>
+        <div className={modalStyles.ModalContent}>
+          <Spinner />
+          <p className={modalStyles.Message}>
+            Waiting for students to connect to their exams...
+          </p>
+        </div>
+      </Modal>
+    </div>
   );
 }

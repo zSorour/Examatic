@@ -8,7 +8,7 @@ import { Modal } from "@mui/material";
 import { useStopwatch } from "react-timer-hook";
 import { useRouter } from "next/router";
 
-import styles from "./ExamPreview.module.css";
+import styles from "./StudentExamPreview.module.css";
 import modalStyles from "../../styles/Modal.module.css";
 
 const isExamWithin10Mins = (exam) => {
@@ -34,7 +34,9 @@ const formatNumberTwoDigits = (number) => {
   });
 };
 
-export default function ExamPreview({ exam }) {
+export default function StudentExamPreview({ exam }) {
+  console.log(exam);
+
   const authCTX = useContext(AuthContext);
   const currentExamCTX = useContext(CurrentExamContext);
   const router = useRouter();
@@ -60,7 +62,7 @@ export default function ExamPreview({ exam }) {
       );
       reset();
       const { publicIP, tempPassword } = data;
-      currentExamCTX.setCurrentExam(publicIP, tempPassword);
+      currentExamCTX.setCurrentExam(exam.id, publicIP, tempPassword);
       if (!data.error) {
         router.push("/students/exams/current-exam");
       }
@@ -74,7 +76,7 @@ export default function ExamPreview({ exam }) {
 
   if (isExamEnded(exam)) {
     examCardAction = <p className={styles.ActionsMessage}>Exam ended.</p>;
-  } else if (isExamWithin10Mins(exam)) {
+  } else if (isExamWithin10Mins(exam) && !exam.invigilationInstanceSocketID) {
     examCardAction = (
       <button className={styles.Button} onClick={() => connectToExam()}>
         Connect to Exam
@@ -83,7 +85,8 @@ export default function ExamPreview({ exam }) {
   } else {
     examCardAction = (
       <p className={styles.ActionsMessage}>
-        Connecting to the exam is allowed only 10 minutes before its start time.
+        Connecting to the exam is allowed only 10 minutes before its start time,
+        and an Instructor must have started invigilation.
       </p>
     );
   }

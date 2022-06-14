@@ -28,7 +28,9 @@ export default function StudentExamsPage() {
 
   return (
     <div>
-      {!isLoading && exams && <ExamsList exams={exams} />}
+      {!isLoading && exams && (
+        <ExamsList exams={exams} previewType="StudentPreview" />
+      )}
 
       <Modal
         open={!!errorTitle}
