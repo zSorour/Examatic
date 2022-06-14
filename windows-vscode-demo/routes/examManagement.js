@@ -11,6 +11,12 @@ examManagementRouter.post(
   examManagementController.createExam
 );
 
+examManagementRouter.patch(
+  "/update-exam-invigilation-info",
+  examManagementValidator.updateExamInvigilationInfoValidator(),
+  examManagementController.updateExamInvigilationInfo
+);
+
 // examManagementRouter.put(
 //   "/create-invigilation-instance",
 //   examManagementValidator.createInvigilationInstanceValidator(),

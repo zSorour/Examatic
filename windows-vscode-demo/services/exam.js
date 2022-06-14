@@ -122,3 +122,39 @@ module.exports.getExam = async (examID) => {
 
   return promise;
 };
+
+module.exports.updateExamInvigilationInfo = async (
+  examID,
+  instanceIP,
+  socketID
+) => {
+  const promise = new Promise(async (resolve, reject) => {
+    let exam;
+    try {
+      exam = await this.getExam(examID);
+    } catch (err) {
+      return promise.reject(err);
+    }
+
+    exam.invigilationInstance = {
+      instanceIP,
+      socketID
+    };
+
+    try {
+      exam.save();
+    } catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        "Server Error",
+        ["The server failed processing your request, please try again later."],
+        500
+      );
+      return reject(error);
+    }
+
+    resolve(exam);
+  });
+
+  return promise;
+};

@@ -27,6 +27,17 @@ module.exports.createExamValidator = () => [
     .withMessage("Instance template must not be empty.")
 ];
 
+module.exports.updateExamInvigilationInfoValidator = () => [
+  check("examID").notEmpty().withMessage("Exam ID must not be empty."),
+  check("instanceIP")
+    .notEmpty()
+    .withMessage("Invigilation instance IP cannot be empty"),
+  check("instanceIP")
+    .isIP()
+    .withMessage("Invigilation instance IP must be in a correct IP format"),
+  check("socketID").notEmpty().withMessage("Socket ID cannot be empty.")
+];
+
 // module.exports.createInvigilationInstanceValidator = () => [
 //   check("examID").notEmpty().withMessage("Exam ID must not be empty.")
 // ];

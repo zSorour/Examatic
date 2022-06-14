@@ -89,6 +89,27 @@ module.exports.createExam = async (req, res, next) => {
   }
 };
 
+module.exports.updateExamInvigilationInfo = async (req, res, next) => {
+  const validationErrors = validationResult(req).array();
+  if (validationErrors.length > 0) {
+    const error = new HttpError(
+      "Invalid Exam/Invigilation Data",
+      validationErrors,
+      422
+    );
+    return next(error);
+  }
+
+  const { examID, instanceIP, socketID } = req.body;
+  try {
+    await examService.updateExamInvigilationInfo(examID, instanceIP, socketID);
+  } catch (err) {
+    return next(err);
+  }
+
+  res.send({ message: "Exam invigilation info updated successfully!" });
+};
+
 // module.exports.createInvigilationInstance = async (req, res, next) => {
 //   const validationErrors = validationResult(req).array();
 //   if (validationErrors.length > 0) {
