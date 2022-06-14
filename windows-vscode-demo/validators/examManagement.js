@@ -38,6 +38,6 @@ module.exports.updateExamInvigilationInfoValidator = () => [
   check("socketID").notEmpty().withMessage("Socket ID cannot be empty.")
 ];
 
-// module.exports.createInvigilationInstanceValidator = () => [
-//   check("examID").notEmpty().withMessage("Exam ID must not be empty.")
-// ];
+module.exports.getExamValidator = () => [
+  check("examID").notEmpty().withMessage("Exam ID must not be empty.")
+];

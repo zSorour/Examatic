@@ -17,10 +17,10 @@ examManagementRouter.patch(
   examManagementController.updateExamInvigilationInfo
 );
 
-// examManagementRouter.put(
-//   "/create-invigilation-instance",
-//   examManagementValidator.createInvigilationInstanceValidator(),
-//   examManagementController.createInvigilationInstance
-// );
+examManagementRouter.get(
+  "/",
+  examManagementValidator.getExamValidator(),
+  examManagementController.getExam
+);
 
 module.exports = examManagementRouter;

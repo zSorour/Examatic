@@ -20,7 +20,8 @@ module.exports.getStudentExams = async (req, res, next) => {
       name: exam.name,
       courseName: exam.courseName,
       duration: exam.duration,
-      startDateTime: exam.startDateTime
+      startDateTime: exam.startDateTime,
+      invigilationSocketID: exam.invigilationInstance.socketID
     };
   });
 
