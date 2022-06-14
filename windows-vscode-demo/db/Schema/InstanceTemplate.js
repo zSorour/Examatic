@@ -1,5 +1,4 @@
 const { Schema } = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 
 const InstanceTemplateSchema = new Schema({
   name: {
@@ -16,7 +15,5 @@ const InstanceTemplateSchema = new Schema({
     required: true
   }
 });
-
-InstanceTemplateSchema.plugin(uniqueValidator);
 
 module.exports = InstanceTemplateSchema;

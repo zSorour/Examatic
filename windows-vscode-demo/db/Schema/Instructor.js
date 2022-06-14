@@ -1,5 +1,4 @@
 const { Schema, ObjectId } = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 
 const InstructorSchema = new Schema({
   username: {
@@ -29,6 +28,5 @@ const InstructorSchema = new Schema({
   ]
 });
 
-InstructorSchema.plugin(uniqueValidator);
 
 module.exports = InstructorSchema;

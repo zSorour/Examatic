@@ -1,5 +1,4 @@
 const { Schema, ObjectId } = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 
 const InstanceTemplateSchema = require("./InstanceTemplate");
 
@@ -35,7 +34,7 @@ const ExamSchema = new Schema({
     instanceIP: {
       type: "String"
     },
-    peerID: {
+    socketID: {
       type: "String"
     },
     instancePassword: {
@@ -54,7 +53,5 @@ const ExamSchema = new Schema({
     select: false
   }
 });
-
-ExamSchema.plugin(uniqueValidator);
 
 module.exports = ExamSchema;
