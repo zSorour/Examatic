@@ -4,11 +4,16 @@ const instructorValidator = require("../validators/instructor");
 
 const instructorRouter = Router();
 
-// instructorRouter.get("/exams", instructorController.getInstructorExams);
 instructorRouter.get(
   "/courses",
   instructorValidator.getInstructorCoursesValidator(),
   instructorController.getInstructorCourses
+);
+
+instructorRouter.get(
+  "/exams",
+  instructorValidator.getInstructorExamsValidator(),
+  instructorController.getInstructorExams
 );
 
 module.exports = instructorRouter;

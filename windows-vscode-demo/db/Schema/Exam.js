@@ -39,8 +39,7 @@ const ExamSchema = new Schema({
     },
     instancePassword: {
       type: "String"
-    },
-    select: false
+    }
   },
   vpcID: {
     type: "String",

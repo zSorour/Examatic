@@ -81,3 +81,45 @@ module.exports.getInstructorCourses = async (username) => {
 
   return promise;
 };
+
+module.exports.getInstructorExams = async (username) => {
+  const promise = new Promise(async (resolve, reject) => {
+    let instructor;
+    try {
+      instructor = await Instructor.findOne({ username: username });
+    } catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        "Server Error",
+        ["Couldn't get instructor's exams."],
+        500
+      );
+      return reject(error);
+    }
+
+    if (!instructor) {
+      const error = new HttpError(
+        "Invalid Instructor",
+        ["No instructor with the given username exists."],
+        404
+      );
+      return reject(error);
+    }
+
+    try {
+      await instructor.populate("assignedExams");
+    } catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        "Server Error",
+        ["Couldn't get instructor's exams."],
+        500
+      );
+      return reject(error);
+    }
+
+    resolve(instructor.assignedExams);
+  });
+
+  return promise;
+};
