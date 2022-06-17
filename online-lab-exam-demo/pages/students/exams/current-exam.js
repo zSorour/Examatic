@@ -31,7 +31,9 @@ export default function CurrentExamPage() {
         "GET"
       );
       console.log(exam);
-      setInvigilationInstanceSocketID(exam.invigilationInstance.socketID);
+      if (exam.invigilationInstance) {
+        setInvigilationInstanceSocketID(exam.invigilationInstance.socketID);
+      }
     };
 
     fetchExamInvigilationInfo();
@@ -44,6 +46,12 @@ export default function CurrentExamPage() {
       setMySocketID(id);
     });
   }, []);
+
+  useEffect(() => {
+    if (invigilationInstanceSocketID) {
+      shareStudentMediaToInvigilationInstance();
+    }
+  }, [invigilationInstanceSocketID]);
 
   const getStudentScreenMedia = async (constraints) => {
     let stream;
@@ -84,9 +92,6 @@ export default function CurrentExamPage() {
   return (
     <div>
       <div>
-        <button onClick={shareStudentMediaToInvigilationInstance}>
-          Share Screen
-        </button>
         <VNCScreen />
       </div>
     </div>

@@ -37,7 +37,11 @@ const LoginForm = () => {
       );
       const { userId, username, role, token } = responseData;
       authCTX.login(userId, username, role, token);
-      router.push("/");
+      if (role === "Student") {
+        router.push("/students");
+      } else if (authCTX.role === "Instructor") {
+        router.push("/instructors");
+      }
     } catch (err) {
       console.log("Error signing in.");
     }

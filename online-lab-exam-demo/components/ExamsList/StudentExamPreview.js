@@ -16,7 +16,6 @@ const isExamWithin10Mins = (exam) => {
   const examDate = new Date(exam.startDateTime);
   const diff = examDate.getTime() - now.getTime();
   const diffInMins = diff / 1000 / 60;
-  console.log(diffInMins);
   return diffInMins <= 100000000000;
 };
 
@@ -24,7 +23,6 @@ const isExamEnded = (exam) => {
   const now = new Date();
   const examEndDate = new Date(exam.startDateTime);
   examEndDate.setMinutes(examEndDate.getMinutes() + exam.duration);
-  console.log(examEndDate);
   return now > examEndDate;
 };
 
@@ -35,8 +33,6 @@ const formatNumberTwoDigits = (number) => {
 };
 
 export default function StudentExamPreview({ exam }) {
-  console.log(exam);
-
   const authCTX = useContext(AuthContext);
   const currentExamCTX = useContext(CurrentExamContext);
   const router = useRouter();

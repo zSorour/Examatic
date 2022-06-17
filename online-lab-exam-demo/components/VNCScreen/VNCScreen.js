@@ -8,6 +8,7 @@ import VNCScreenLayout from "./VNCScreenLayout/VNCScreenLayout";
 
 const VNCScreen = () => {
   const vncScreenRef = useRef(null);
+
   const currentExamCTX = useContext(CurrentExamContext);
 
   return (
@@ -15,14 +16,14 @@ const VNCScreen = () => {
       <VncScreen
         className={styles.VNCScreen}
         ref={vncScreenRef}
-        onPaste={() => {
-          const clipboard = navigator.clipboard;
-          clipboard.readText().then((text) => {
-            console.log(text);
-          });
-        }}
         url={`ws://${currentExamCTX.instanceIP}:6080`}
         scaleViewport
+        retryDuration="1000"
+        rfbOptions={{
+          credentials: {
+            password: "testing@Password1"
+          }
+        }}
       ></VncScreen>
     </VNCScreenLayout>
   );
