@@ -1,5 +1,7 @@
 const terraformService = require("../services/terraform");
 
+const { validationResult } = require("express-validator");
+
 const HttpError = require("../models/HTTPError");
 const studentService = require("../services/student");
 const examService = require("../services/exam");
@@ -50,6 +52,12 @@ module.exports.getCurrentExam = async (req, res, next) => {
 };
 
 module.exports.connectToExam = async (req, res, next) => {
+  const validationErrors = validationResult(req).array();
+  if (validationErrors.length > 0) {
+    const error = new HttpError("Invalid Data", validationErrors, 422);
+    return next(error);
+  }
+
   const { username, examID } = req.body;
 
   let exam;
