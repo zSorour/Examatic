@@ -2,7 +2,7 @@
 
 services:
   backend:
-    image: zsorour/backend-demo:0.5.0.DEV
+    image: zsorour/backend-demo:1.0.0.PROD
     container_name: nodejs-backend-demo
     environment:
       - mongoURI=XXXXXXXXXXXXXXXXXX
