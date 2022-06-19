@@ -6,7 +6,7 @@ import InstructorExamPreview from "./InstructorExamPreview";
 
 export default function ExamsList({ exams, previewType }) {
   const sortedExams = exams.sort((a, b) => {
-    return a.startDateTime > b.startDateTime ? -1 : 1;
+    return a.startDateTime < b.startDateTime ? -1 : 1;
   });
 
   const examPreviews = {

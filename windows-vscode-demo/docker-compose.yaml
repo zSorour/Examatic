@@ -1,0 +1,15 @@
+# REPLACE XXXXXXXXXXXXXXXXXX with your own secret value
+
+services:
+  backend:
+    image: zsorour/backend-demo:0.5.0.DEV
+    container_name: nodejs-backend-demo
+    environment:
+      - mongoURI=XXXXXXXXXXXXXXXXXX
+      - PORT=5000
+      - JWT_SECRET=XXXXXXXXXXXXXXXXXX
+      - AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXX
+      - AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXX
+      - TF_VAR_admin_pass=XXXXXXXXXXXXXXXXXX
+    ports:
+      - "5000:5000"
