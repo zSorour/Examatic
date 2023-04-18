@@ -1,6 +1,0 @@
----
-- name: Create a login user
-  user:
-    name: student
-    password: testing@Password1
-    state: present

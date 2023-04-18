@@ -1,8 +1,0 @@
-[machine]
-52.58.231.96
-
-[machine:vars]
-ansible_user=admin
-ansible_password=testing@Password1
-ansible_connection=winrm
-ansible_winrm_server_cert_validation=ignore

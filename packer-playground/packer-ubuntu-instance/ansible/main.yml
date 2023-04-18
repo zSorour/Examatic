@@ -1,9 +1,0 @@
----
-- name: Bake instance with all required fundemental programs and dependencies
-  hosts: default
-  become: true
-  roles:
-    # - root-user
-    - user
-    - ubuntu-common
-    # - redis

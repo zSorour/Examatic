@@ -1,9 +1,0 @@
----
-- name: Install Visual Studio Code on Windows Machine
-  hosts: default
-
-  roles:
-    - admin-user
-    - user
-    - windows-common
-    - vscode

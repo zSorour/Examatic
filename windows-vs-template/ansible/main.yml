@@ -1,8 +1,0 @@
----
-- name: Testing
-  hosts: all
-
-  roles:
-    # - admin-user
-    # - user
-    - test
