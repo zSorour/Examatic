@@ -33,3 +33,8 @@ The backend server stores the connection parameters in the database server and r
 The examinee uses the web application to connect to the cloud instance’s full desktop experience using the VNC client integrated into the web application. Meanwhile, the web application starts sharing the examinee’s screen to the invigilator’s device to monitor examinees and limit cheating, plagiarism, and any suspicious behavior.
 
 ![Architecture Topology](https://github.com/zSorour/Examatic/blob/master/images/architecture-topology.png?raw=true 'Architecture Topology')
+
+## Notes and Implementation Details
+
+- [Building a Customized VM Image (Server Template) Using Packer](https://github.com/zSorour/Examatic/tree/master/packer-windows-vs-template#building-a-vm-image-server-template-using-packer)
+- More sections coming soon.
