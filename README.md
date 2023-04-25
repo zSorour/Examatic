@@ -18,6 +18,28 @@ To ensure that the proposed cloud architecture is highly available and scalable,
 
 Due to the costs of having the system deployed continuously, it has only beed deployed for the duration of the graduation project demo and ICCSM 2022 conferece presentation. However, **[a recorded video could be found here](https://1drv.ms/v/s!AsW7yJcOPv15iaZAkGMYipBcR7tbTw?e=mUMuBA 'Examatic Demo').**
 
+<details>
+<summary><b>Screenshots</b></summary>
+
+  <details>
+    <summary><b>&nbsp;&nbsp;&nbsp;&nbsp;Exam Instructor Pages</b></summary>
+  </details>
+
+  <details>
+    <summary><b>&nbsp;&nbsp;&nbsp;&nbsp;Examinee/Student Pages</b></summary>
+
+**Exams Page**
+![Exams Page](https://github.com/zSorour/Examatic/blob/master/images/Exams%20Demo%20Screenshot.png?raw=true 'Exams Page')
+**Clicking on Connect to Exam Button**
+![Clicking on Connect to Exam Button](https://github.com/zSorour/Examatic/blob/master/images/Creating%20Exam%20Instance%20Screenshot.png?raw=true 'Clicking on Connect to Exam Button')
+**Accessing Exam Instance in the Browser (using noVNC)**
+![Accessing Exam Instance in the Browser](https://github.com/zSorour/Examatic/blob/master/images/Logging%20into%20exam%20instance%20screenshot.png?raw=true 'Accessing Exam Instance in the Browser')
+![In exam example](https://github.com/zSorour/Examatic/blob/master/images/In-Exam%20Demo%20Screenshot.png?raw=true 'In exam example screenshot')
+
+  </details>
+  
+</details>
+
 # Examatic Architecture Topology
 
 The proposed architecture comprises 6 main components:
