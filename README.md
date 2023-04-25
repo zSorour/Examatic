@@ -8,7 +8,7 @@ To ensure that the proposed cloud architecture is highly available and scalable,
 
 # Project Demo
 
-Due to the costs of having the system deployed continuously, it has only beed deployed for the duration of the graduation project demo and ICCSM 2022 conferece presentation. However, [a recorded video could be found here](https://1drv.ms/v/s!AsW7yJcOPv15iaZAkGMYipBcR7tbTw?e=mUMuBA 'Examatic Demo').
+Due to the costs of having the system deployed continuously, it has only beed deployed for the duration of the graduation project demo and ICCSM 2022 conferece presentation. However, **[a recorded video could be found here](https://1drv.ms/v/s!AsW7yJcOPv15iaZAkGMYipBcR7tbTw?e=mUMuBA 'Examatic Demo').**
 
 # Examatic Architecture Topology
 
