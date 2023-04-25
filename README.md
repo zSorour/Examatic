@@ -22,15 +22,9 @@ The proposed architecture comprises 6 main components:
 - Database Server
 - Container Orchestration using Kubernetes
 
-The architecture aims at automating the process of provisioning cloud infrastructure by using IaC server templating and configuration management tools, Packer and Ansible, to build a pre-configured image that contains the required operating system, software programs, software dependencies, appropriate user configurations, etc.
+Typically, Packer and Ansible will be integrated together tobuild a pre-configured server template containing all the required configurations for a certain type of exam. An examinee would use their web browser to access the frontend web application. With a click of a button, the frontend web application sends an HTTP request to the REST API backend server which in turn invokes Terraform to start provisioning the required cloud instance. Terraform uses the server template initially created using Packer and Ansible to create an EC2 instance on Amazon Web Services (AWS).
 
-Typically, an examinee uses their browser to access a front-end web application that communicates with a REST API backend server. With a click of a button, the web application initiates a request to the backend server, which in turn issues a request to Terraform’s API to start provisioning the required cloud instance.
-
-Terraform uses the image created by Packer and Ansible to spin up an AWS EC2 instance that is pre-configured with all the required software and responds with the required connection parameters.
-
-The backend server stores the connection parameters in the database server and responds to the web application with the appropriate connection parameters.
-
-The examinee uses the web application to connect to the cloud instance’s full desktop experience using the VNC client integrated into the web application. Meanwhile, the web application starts sharing the examinee’s screen to the invigilator’s device to monitor examinees and limit cheating, plagiarism, and any suspicious behavior.
+As the cloudinstance is created via Terraform, the NodeJS backend server parses Terraform’s output representing the instance’s connection parameters and stores them in the database server. Consequently, it sends a response to the frontend web application containing the connection parameters so that the examinee can connect to the cloud instance’s full desktop experience using the VNC client integrated into the web application. Simultaneously, the web application shares the examinee’s screen to the invigilator’s device or a dedicated cloud instance.
 
 ![Architecture Topology](https://github.com/zSorour/Examatic/blob/master/images/architecture-topology.png?raw=true 'Architecture Topology')
 
