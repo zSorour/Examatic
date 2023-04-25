@@ -42,7 +42,23 @@ Due to the costs of having the system deployed continuously, it has only been de
 <ul>
   <details>
     <summary><b>Exam Instructor Flow</b></summary>
+
+1. An instructor goes to the login page, enters username and password, and logs in:
+   ![Instructor Login Page](https://github.com/zSorour/Examatic/blob/master/images/Instructor%20Login%20Page.png?raw=true 'Instructor Login Page')
+2. The instructor clicks on the Exams link in the navigation bar and gets directed to the exams page. A list of exams assigned to the instructor should be displayed, if any, with a button to create an exam:
+   ![Instructor Assigned Exams Page](https://github.com/zSorour/Examatic/blob/master/images/Instructor%20Assigned%20Exams%20Page.png?raw=true 'Instructor Assigned Exams Page')
+3. As the instructor clicks on the “Create Exam” button, he/she gets navigated to the create exam page and a form is displayed to enter the exam information:
+   ![Instructor Create Exam Form](https://github.com/zSorour/Examatic/blob/master/images/Instructor%20Create%20Exam%20Form.png?raw=true 'Instructor Create Exam Form')
+4. After the instructor enters the exam information and clears out any input validation errors and clicks create, an animated loading screen is displayed informing the instructor about the expected time of exam creation, and an elapsed time counter.
+
+   What happens behind the scenes is a request being sent to the REST API, which invokes Terraform CLI to create the necessary network infrastructure for this exam, and persists the exam's info in the database alongside the required network details:
+   ![Creating Exam Infrastructure Popup](https://github.com/zSorour/Examatic/blob/master/images/Creating%20Exam%20Network%20Infra.png?raw=true 'Creating Exam Infrastructure Popup')
+
+5. After the exam is created, the loading pop-up closes and the instructor is automatically redirected to the exams page. The exam that has just been created is now visible in the list of exams:
+   ![Exam Created'](https://github.com/zSorour/Examatic/blob/master/images/Instructor%20Exam%20Network%20Infra%20Created.png?raw=true 'Exam Created')
+
   </details>
+  
   <details>
     <summary><b>Examinee/Student Flow</b></summary>
 
