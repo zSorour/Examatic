@@ -1,3 +1,11 @@
+# Table of Content
+
+- [Table of Content](#table-of-content)
+- [Project Brief](#project-brief)
+- [Project Demo](#project-demo)
+- [Examatic Architecture Topology](#examatic-architecture-topology)
+- [Notes and Implementation Details](#notes-and-implementation-details)
+
 # Project Brief
 
 Examatic proposes a cloud-based architecture that automates and facilitates the delivery of hands-on software lab exams online. By using IaC server templating (Packer), configuration management (Ansible), and provisioning tools (Terraform), practical software lab exams can be delivered on the cloud.
@@ -28,8 +36,10 @@ As the cloudinstance is created via Terraform, the NodeJS backend server parses 
 
 ![Architecture Topology](https://github.com/zSorour/Examatic/blob/master/images/architecture-topology.png?raw=true 'Architecture Topology')
 
-## Notes and Implementation Details
+# Notes and Implementation Details
 
 - [Building a Customized VM Image (Server Template) Using Packer](https://github.com/zSorour/Examatic/tree/master/packer-windows-vs-template#building-a-vm-image-server-template-using-packer)
+
 - [Provisioning Necessary Exams Cloud Infrastructure using Terraform](https://github.com/zSorour/Examatic/tree/master/system-demo/backend/terraform#provisioning-necessary-cloud-infrastructure-using-terraform)
+
 - More sections coming soon.
