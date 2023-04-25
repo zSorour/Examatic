@@ -31,4 +31,5 @@ As the cloudinstance is created via Terraform, the NodeJS backend server parses 
 ## Notes and Implementation Details
 
 - [Building a Customized VM Image (Server Template) Using Packer](https://github.com/zSorour/Examatic/tree/master/packer-windows-vs-template#building-a-vm-image-server-template-using-packer)
+- [Provisioning Necessary Exams Cloud Infrastructure using Terraform](https://github.com/zSorour/Examatic/tree/master/system-demo/backend/terraform#provisioning-necessary-cloud-infrastructure-using-terraform)
 - More sections coming soon.
