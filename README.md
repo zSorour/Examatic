@@ -30,7 +30,7 @@ Typically, Packer and Ansible will be integrated together tobuild a pre-configur
 
 As the cloudinstance is created via Terraform, the NodeJS backend server parses Terraform’s output representing the instance’s connection parameters and stores them in the database server. Consequently, it sends a response to the frontend web application containing the connection parameters so that the examinee can connect to the cloud instance’s full desktop experience using the VNC client integrated into the web application. Simultaneously, the web application shares the examinee’s screen to the invigilator’s device or a dedicated cloud instance.
 
-![Architecture Topology](https://github.com/zSorour/Examatic/blob/master/images/architecture-topology.png?raw=true 'Architecture Topology')
+![Architecture Topology](https://github.com/zSorour/Examatic/blob/master/images/Architecture%20Topology.png?raw=true 'Architecture Topology')
 
 # Project Demo
 
