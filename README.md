@@ -37,25 +37,29 @@ As the cloud instance is created via Terraform, the NodeJS backend server parses
 Due to the costs of having the system deployed continuously, it has only been deployed for the duration of the graduation project demo and ICCSM 2022 conference presentation. However, **[a recorded video could be found here](https://1drv.ms/v/s!AsW7yJcOPv15iaZAkGMYipBcR7tbTw?e=mUMuBA 'Examatic Demo').**
 
 <details>
-<summary><b>Screenshots</b></summary>
-
+<summary><b>User Flow (includes screenshots)</b></summary>
+</br>
+<ul>
   <details>
-    <summary><b>&nbsp;&nbsp;&nbsp;&nbsp;Exam Instructor Pages</b></summary>
+    <summary><b>Exam Instructor Flow</b></summary>
   </details>
   <details>
-    <summary><b>&nbsp;&nbsp;&nbsp;&nbsp;Examinee/Student Pages</b></summary>
+    <summary><b>Examinee/Student Flow</b></summary>
 
-Exams Page
-![Exams Page](https://github.com/zSorour/Examatic/blob/master/images/Exams%20Demo%20Screenshot.png?raw=true 'Exams Page')
-Clicking on Connect to Exam Button:
-Sends a request to the REST API server, which invokes Terraform CLI to create the exam instance, and responds with the instance ip
-![Clicking on Connect to Exam Button](https://github.com/zSorour/Examatic/blob/master/images/Creating%20Exam%20Instance%20Screenshot.png?raw=true 'Clicking on Connect to Exam Button')
-Accessing Exam Instance in the Browser (using noVNC)
-![Accessing Exam Instance in the Browser](https://github.com/zSorour/Examatic/blob/master/images/Logging%20into%20exam%20instance%20screenshot.png?raw=true 'Accessing Exam Instance in the Browser')
-![In exam example](https://github.com/zSorour/Examatic/blob/master/images/In-Exam%20Demo%20Screenshot.png?raw=true 'In exam example screenshot')
+1. A student goes to the login page, enters username and password, and logs in:
+   ![Student login page](https://github.com/zSorour/Examatic/blob/master/images/Student%20Login%20Page.png?raw=true 'Student login page')
+2. The student clicks on the Exams link in the navigation bar and gets directed to the exams page:
+   ![Exams Page](https://github.com/zSorour/Examatic/blob/master/images/Exams%20Demo%20Screenshot.png?raw=true 'Exams Page')
+3. Assuming the student/examinee has an exam within the next 10 minutes, as he/she clicks on the “Connect to Exam” button, a loading pop-up is displayed. Typically, the student gets connected to the exam in an average of 2 minutes and a half.
+   The button click in fact sends a request to the NodeJS REST API which executes the business logic related to invoking Terraform CLI, parsing the output (instance IP, temp password), and sending them to the user:
+   ![Clicking on Connect to Exam Button](https://github.com/zSorour/Examatic/blob/master/images/Creating%20Exam%20Instance%20Screenshot.png?raw=true 'Clicking on Connect to Exam Button')
+
+4. As the exam cloud instance is created specifically for the student on-demand, he/she gets navigated to the current exam page. There, the student has access to the GUI of a cloud instance, right into their browser, using noVNC:
+   ![Accessing Exam Instance in the Browser](https://github.com/zSorour/Examatic/blob/master/images/Logging%20into%20exam%20instance%20screenshot.png?raw=true 'Accessing Exam Instance in the Browser')
+   ![In exam example](https://github.com/zSorour/Examatic/blob/master/images/In-Exam%20Demo%20Screenshot.png?raw=true 'In exam example screenshot')
 
   </details>
-  
+</ul>
 </details>
 
 # Notes and Implementation Details
