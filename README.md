@@ -84,4 +84,6 @@ Due to the costs of having the system deployed continuously, it has only been de
 
 - [Provisioning Necessary Exams Cloud Infrastructure using Terraform](https://github.com/zSorour/Examatic/tree/master/system-demo/backend/terraform#provisioning-necessary-cloud-infrastructure-using-terraform)
 
+- [Building a REST API integrated with Terraform CLI](https://github.com/zSorour/Examatic/tree/master/system-demo/backend#building-a-rest-api-using-nodejs-and-express)
+
 - More sections coming soon.
