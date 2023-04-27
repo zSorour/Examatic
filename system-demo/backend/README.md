@@ -10,7 +10,7 @@ To achieve the principle of “Separation of Concerns”, and to maintain modifi
 
 The flow of interaction between the layers and the implemented CommonJS modules starts by receiving an HTTP Request on one of the registered routes defined using Express Routers. The HTTP request is then delegated to the corresponding controller. The Controller’s responsibility is to parse the request body and pass it to the relevant Service modules to invoke the required business/application logic. The Service modules invoke the Data Access Layer, which is typically implemented in the form of Mongoose Model objects. As the Service module completes its functionality, it returns the required data to the Controller module, which is finally responsible for sending back a response to the user that had initiated the HTTP request.
 
-All the validation logic is handled separately in specific modules in the “validators” folder. Each validator module implements an “express-validator” middleware and exports it so that it can be easily incorporated as a middleware in the Express Router to ensure the validity of the data before the Controller proceeds to perform its functionalities.
+All the validation logic is handled separately in specific modules in the [validators folder](https://github.com/zSorour/Examatic/tree/master/system-demo/backend/validators). Each validator module implements an “express-validator” middleware and exports it so that it can be easily incorporated as a middleware in the Express Router to ensure the validity of the data before the Controller proceeds to perform its functionalities.
 
 ## Implementing Terraform Service using Child Process Node Module
 
