@@ -14,7 +14,78 @@ All the validation logic is handled separately in specific modules in the [valid
 
 ## Implementing Terraform Service using Child Process Node Module
 
-_Coming soon._
+The [terraform.js service module](https://github.com/zSorour/Examatic/blob/master/system-demo/backend/services/terraform.js) defines a bunch of useful functions that invoke Terraform CLI from NodeJS using the [child process node module](https://nodejs.org/api/child_process.html).
+
+Promisify function in the util node module is also used to provide a Promise-based API of the child process exec function as follows:
+
+```js
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+```
+
+This promisified exec function is used in `terraformWorkspaceExists`, `createTerraformWorkspace`, `selectTerraformWorkspace` functions. All these functions take the same input parameters:
+
+1. dir: the working directory that contains the terraform HCL files
+2. workspaceName: the name of the workspace we wish to perform the operation on.
+
+Then, the function invokes the promisified exec function according to the desired functionality. For instance, to create a Terraform Workspace, one must execute the command:
+
+```sh
+terraform workspace new {workspace name}
+```
+
+Therefore, the `createTerraformWorkspace` function utilizes the promisified exec method to execute the same command using the desired workspace name coming from the input parameter, besides adding the `-chdir={dir}` argument to specify the target directory. This is done as follows:
+
+```js
+const createTerraformWorkspace = async (dir, workspaceName) => {
+  let success = true;
+  try {
+    await exec(`terraform -chdir=${dir} workspace new ${workspaceName}`);
+  } catch (err) {
+    success = false;
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    if (success) {
+      resolve('Workspace created successfully');
+    } else {
+      reject('Could not create workspace');
+    }
+  });
+
+  return promise;
+};
+```
+
+### Parsing Terraform Output Using Async Iterator Pattern with Streams
+
+In the `applyTerraform` function inside terraform.js service module, the asynchronous [spawn](https://nodejs.org/api/child_process.html#child_processspawncommand-args-options) function of the NodeJS child process module has been used to spawn a terraform CLI process to execute the Terraform Apply command as follows:
+
+```js
+/*
+    for automation, we execute the terraform apply command using
+    -json and -auto-approve
+    this outputs the result in a JSON machine readable format that we
+    can easily parse later.
+*/
+
+const tfApply = spawn('terraform', [
+  `-chdir=${dir}`,
+  'apply',
+  '-auto-approve',
+  '-json',
+  ...tfInputVariables
+]);
+```
+
+According to the NodeJs docs, the spawn function returns a child process object, which includes a `stdout` property that represents a Readable Stream, which is a stream of data printed by the child process invoked, which is Terraform in this case.
+
+Therefore, the output values of Terraform can be retrieved by reading the `stdout` stream and parsing it to get the actual output values. Since Readable Streams are compatible with Async Iterators in NodeJS, Async Iterators can be easily used to read the stream of data as it is being outputted by Terraform, in a non-blocking fashion.
+
+The following illustrated code snippet shows Async Iterators in action:
+![Using Async Iterator Pattern](https://github.com/zSorour/Examatic/blob/master/images/Usage%20of%20Async%20Iterator%20Pattern.png?raw=true 'Using Async Iterator Pattern')
+
+You can find more information about the Async Iterator Pattern [here](https://www.nodejsdesignpatterns.com/blog/javascript-async-iterators/).
 
 ## Promises and Parallel Execution
 
@@ -56,3 +127,43 @@ const [instructor, instanceTemplate] = promisesResults;
 
 // ...some code to create exam VPC by invoking Terraform service and saving the exam details in the db...
 ```
+
+# Containerizing the Backend Server with Docker
+
+A Docker Image is created based on the official NodeJS Alpine Linux Docker image, therefore, there is no need to write the configuration for installing NodeJS in the Dockerfile. However, the Dockerfile must be configured to have Terraform installed in the resulting Docker image. Moreover, the Dockerfile has been configured to start the backend server using [PM2](https://pm2.keymetrics.io/).
+
+```dockerfile
+FROM node:18.2-alpine
+
+# install necessary software tools
+RUN apk add --no-cache \
+  zip \
+  git \
+  bash
+
+# specify environment variables for Terraform Version and NodeJS production environment
+ENV TERRAFORM_VERSION 1.2.0
+ENV NODE_ENV production
+
+# install Terraform
+RUN wget -O terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+  unzip terraform.zip -d /usr/local/bin && \
+  rm -f terraform.zip
+
+# specify the working directory of the nodejs backend server
+WORKDIR /app
+
+# copy all files to the working directory.
+# note: a .dockerignore file is used to ignore files that should not be copied such as node_modules
+COPY ./ ./
+
+# allow execution permissions on the entrypoint shell file, and install required node_modules
+RUN chmod +x ./docker-entrypoint.sh && npm install && npm install pm2 --save -g
+
+EXPOSE 5000
+
+# invoke the entry point shell file on container start
+ENTRYPOINT ["./docker-entrypoint.sh"]
+```
+
+By containerizing our our REST API, we make sure that the Terraform CLI is installed correctly and that we can seamlessly execute the commands via the terraform.js service module whenever we deploy our REST API.
