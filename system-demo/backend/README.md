@@ -1,3 +1,13 @@
+# Table of Content
+
+- [Table of Content](#table-of-content)
+- [Building a REST API using NodeJS and Express](#building-a-rest-api-using-nodejs-and-express)
+  - [Following a Layered Architecture/Project Structure](#following-a-layered-architectureproject-structure)
+  - [Implementing Terraform Service using Child Process Node Module](#implementing-terraform-service-using-child-process-node-module)
+  - [Parsing Terraform Output Using Async Iterator Pattern with Streams](#parsing-terraform-output-using-async-iterator-pattern-with-streams)
+  - [Promises and Parallel Execution](#promises-and-parallel-execution)
+- [Containerizing the Backend Server with Docker](#containerizing-the-backend-server-with-docker)
+
 # Building a REST API using NodeJS and Express
 
 **Note:** due to the project's limited time and the nature of being a proof of concept rather than an actual production server, some decisions have been taken to reduce the development time as much as possible and help iterate quickly.
@@ -57,7 +67,7 @@ const createTerraformWorkspace = async (dir, workspaceName) => {
 };
 ```
 
-### Parsing Terraform Output Using Async Iterator Pattern with Streams
+## Parsing Terraform Output Using Async Iterator Pattern with Streams
 
 In the `applyTerraform` function inside terraform.js service module, the asynchronous [spawn](https://nodejs.org/api/child_process.html#child_processspawncommand-args-options) function of the NodeJS child process module has been used to spawn a terraform CLI process to execute the Terraform Apply command as follows:
 
