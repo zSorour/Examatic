@@ -80,9 +80,9 @@ Due to the costs of having the system deployed continuously, it has only been de
 
 # Notes and Implementation Details
 
-- [Building a Customized VM Image (Server Template) Using Packer](https://github.com/zSorour/Examatic/tree/master/packer-windows-vs-template#building-a-vm-image-server-template-using-packer)
+- [Building a customized VM image (server template) using Packer and Ansible](https://github.com/zSorour/Examatic/tree/master/packer-windows-vs-template#building-a-vm-image-server-template-using-packer)
 
-- [Provisioning Necessary Exams Cloud Infrastructure using Terraform](https://github.com/zSorour/Examatic/tree/master/system-demo/backend/terraform#provisioning-necessary-cloud-infrastructure-using-terraform)
+- [Provisioning necessary exams cloud infrastructure using Terraform](https://github.com/zSorour/Examatic/tree/master/system-demo/backend/terraform#provisioning-necessary-cloud-infrastructure-using-terraform)
 
 - [Building a REST API integrated with Terraform CLI](https://github.com/zSorour/Examatic/tree/master/system-demo/backend#building-a-rest-api-using-nodejs-and-express)
 
